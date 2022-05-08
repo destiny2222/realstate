@@ -1,5 +1,3 @@
-from dataclasses import field
-from charset_normalizer import models
 from django import  forms
 from .models import Property
 
