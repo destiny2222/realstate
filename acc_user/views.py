@@ -41,6 +41,25 @@ def RegisterView(request):
     return render(request, 'account/signup.html', {"form": form})
 
 @login_required(login_url='index:login') 
+def dashboardview(request):
+     
+    return render(request, 'account/dashboard.html') 
+
+@login_required(login_url='index:login') 
+def Myprofileview(request):
+    form = ProfileUpdateForm()
+    if request.method == 'POST':
+        form = ProfileUpdateForm(data=request.POST or None,instance=request.user, files=request.FILES )
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request,'your profile is set')
+            return redirect('index:profile')
+        else:
+            messages.error(request,  form.errors)
+    return render(request, 'account/profile.html')  
+
+@login_required(login_url='index:login') 
 def logout_View(request):
 	logout(request)
 

@@ -1,6 +1,8 @@
 from django import forms
 from django.contrib.auth import  get_user_model,authenticate
 
+from real.models import CustomUser
+
 User = get_user_model()
 class Loginform(forms.Form):
     username = forms.CharField()
@@ -20,13 +22,14 @@ class Loginform(forms.Form):
                 raise forms.ValidationError("This user is no longer active")
         return super(Loginform, self).clean(*args, **kwargs) 
 
+typeofuser = [
+            ('As Customer', 'As Customer'),
+            ('As Agent', 'As Agent'),
+            ('As Agency', 'As Agency'),
+    ]
 
 class Signupform(forms.Form):
-    typeofuser = (
-        ('As Customer', 'As Customer'),
-        ('As Agent', 'As Agent'),
-        ('As Agency', 'As Agency'),
-    )
+
     fullname = forms.CharField(widget=forms.TextInput(attrs={
          'class':'form-control',
          'type':'text',
@@ -113,3 +116,9 @@ class Signupform(forms.Form):
             register_as=self.cleaned_data['register_as'],
         )
         return user
+
+
+class ProfileUpdateForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = '__all__'

@@ -48,9 +48,9 @@ from ckeditor.configs import DEFAULT_CONFIG
 
 CKEDITOR_CONFIGS = {
     'default': {
-        'toolbar': 'full',
-        'height': 300,
-        'width': 500,
+        # 'toolbar': 'full',
+        # 'height': 300,
+        # 'width': 500,
     },
 }
 
