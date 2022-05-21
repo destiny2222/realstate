@@ -5,14 +5,15 @@
 			<!-- Sign Up Modal -->
 			<!-- <div class="modal  " id="" tabindex="-1" role="dialog" aria-labelledby="sign-up" aria-hidden="true"> -->
 				<div class="modal-dialog modal-dialog-centered login-pop-form" role="document">
-					{%  for message in messages %}
-					<div  class="alert alert-warning alert-dismissible fade show" role="alert">
-					  {{ message }}
-					</div>
-				   {% endfor %} 
+					
 					<div class="modal-content" id="registermodal">
 						<div class="modal-body">
 							<h4 class="modal-header-title">Log In</h4>
+							{%  for message in messages %}
+								<div  class="alert alert-warning alert-dismissible fade show" role="alert">
+								{{ message }}
+								</div>
+							{% endfor %} 
 							<div class="login-form">
 								<form  method="post">
 								    {%   csrf_token %}
