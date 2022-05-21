@@ -30,39 +30,7 @@
 					<div class="row">
 						
 						<div class="col-lg-3 col-md-12">
-							
-							<div class="simple-sidebar sm-sidebar" id="filter_search">
-								
-								<div class="search-sidebar_header">
-									<h4 class="ssh_heading">Close Filter</h4>
-									<button onclick="closeFilterSearch()" class="w3-bar-item w3-button w3-large"><i class="ti-close"></i></button>
-								</div>
-								
-								<div class="sidebar-widgets">
-									<div class="dashboard-navbar">
-										
-										<div class="d-user-avater">
-											<img src="assets/img/user-3.jpg" class="img-fluid avater" alt="">
-											<h4>Adam Harshvardhan</h4>
-											<span>Canada USA</span>
-										</div>
-										
-										<div class="d-navigation">
-											<ul>
-												<li><a href="{%  url 'index:dashborad' %}"><i class="ti-dashboard"></i>Dashboard</a></li>
-												<li class="active"><a href="{%  url 'index:myprofile'  %}"><i class="ti-user"></i>My Profile</a></li>
-												<li><a href="bookmark-list.html"><i class="ti-bookmark"></i>Bookmarked Listings</a></li>
-												<li><a href="my-property.html"><i class="ti-layers"></i>My Properties</a></li>
-												<li><a href="submit-property-dashboard.html"><i class="ti-pencil-alt"></i>Submit New Property</a></li>
-												<li><a href="change-password.html"><i class="ti-unlock"></i>Change Password</a></li>
-												<li><a href="#"><i class="ti-power-off"></i>Log Out</a></li>
-											</ul>
-										</div>
-										
-									</div>
-								</div>
-								
-							</div>
+							{%  include 'account/sidernav.html' %}
 						</div>
 						
 						<div class="col-lg-9 col-md-12">
@@ -72,91 +40,87 @@
 								<div class="form-submit">	
 									<h4>My Account</h4>
 									<div class="submit-section">
-										<div class="row">
-										
-											<div class="form-group col-md-6">
-												<label>Your Name</label>
-												<input type="text" class="form-control" value="{{  user.fullname }}">
+										{%  for message in messages %}
+								        <div  class="alert alert-warning alert-dismissible fade show" role="alert">
+									        {{ message }}
+								        </div>
+								        {% endfor %}
+										<form action="" method="POST" enctype="multipart/form-data">
+											{% csrf_token %}
+										    <div class="row">
+												<div class="form-group col-md-6">
+													<label>Your Name</label>
+													<input type="text" class="form-control" name="fullname" value="{{  user.fullname }}">
+												</div>
+												
+												<div class="form-group col-md-6">
+													<label>Email</label>
+													<input type="email" class="form-control" name="email" value="{{  user.email }}">
+												</div>
+												
+												<div class="form-group col-md-6">
+													<label>Your Title</label>
+													<input type="text" class="form-control" name="usertitle" id="usertitle" value="{{ user.usertitle }}">
+												</div>
+												
+												<div class="form-group col-md-6">
+													<label>Phone</label>
+													<input type="text" class="form-control" name="phonenumber" value="{{ user.phonenumber }}">
+												</div>
+												
+												<div class="form-group col-md-6">
+													<label>Address</label>
+													<textarea class="form-control" name="address" placeholder="{{ user.address }}"></textarea>
+												</div>
+												
+												<div class="form-group col-md-6">
+													<label>City</label>
+													<input type="text" class="form-control" name="city" value="{{  user.city }}">
+												</div>
+												
+												<div class="form-group col-md-6">
+													<label>State</label>
+													<input type="text" class="form-control" name="state" value="{{ user.state }}">
+												</div>
+												
+												<div class="form-group col-md-6">
+													<label>Zip</label>
+													<input type="text" name="zip" class="form-control" value="{{  user.zip }}">
+												</div>
+												
+												<div class="form-group col-md-12">
+													<label>About</label>
+													<input type="text" class="form-control" name="about" id="about" value="{{ user.about }}">
+												</div>
+												<div class="form-group col-md-12">
+													<label>Profile Picture</label>
+													<input type="file" name="photo" id="photo" class="form-control pb-4">
+												</div>
+												<div class="form-group col-md-6">
+													<label>Facebook</label>
+													<input type="text" class="form-control" name="facebook_link" id="facebook_link" value="{{ user.facebook_link }}">
+												</div>
+												
+												<div class="form-group col-md-6">
+													<label>Twitter</label>
+													<input type="text" class="form-control" name="twitter_link" id="user.twitter_link" value="{{ user.twitter_link }}">
+												</div>
+												
+												<div class="form-group col-md-6">
+													<label>Google Plus</label>
+													<input type="text" class="form-control" name="google_link" id="google_link" value="{{ user.google_link }}">
+												</div>
+												
+												<div class="form-group col-md-6">
+													<label>LinkedIn</label>
+													<input type="text" class="form-control" name="linkdin" id="user.linkdin" value="{{ user.linkdin }}">
+												</div>
+												
+												<div class="form-group col-lg-12 col-md-12">
+													<input class="btn btn-theme-light-2 rounded" type="submit" value="Save Changes">
+												</div>
 											</div>
-											
-											<div class="form-group col-md-6">
-												<label>Email</label>
-												<input type="email" class="form-control" value="{{  user.email }}">
-											</div>
-											
-											<div class="form-group col-md-6">
-												<label>Your Title</label>
-												<input type="text" class="form-control" value="Web Designer">
-											</div>
-											
-											<div class="form-group col-md-6">
-												<label>Phone</label>
-												<input type="text" class="form-control" value="{{ user.phonenumber }}">
-											</div>
-											
-											<div class="form-group col-md-6">
-												<label>Address</label>
-												<input type="text" class="form-control" value="{{ user.address }}">
-											</div>
-											
-											<div class="form-group col-md-6">
-												<label>City</label>
-												<input type="text" class="form-control" value="Montquebe">
-											</div>
-											
-											<div class="form-group col-md-6">
-												<label>State</label>
-												<input type="text" class="form-control" value="Canada">
-											</div>
-											
-											<div class="form-group col-md-6">
-												<label>Zip</label>
-												<input type="text" class="form-control" value="160052">
-											</div>
-											
-											<div class="form-group col-md-12">
-												<label>About</label>
-												<textarea class="form-control">Maecenas quis consequat libero, a feugiat eros. Nunc ut lacinia tortor morbi ultricies laoreet ullamcorper phasellus semper</textarea>
-											</div>
-											<div class="form-group col-md-12">
-												<label>Profile Picture</label>
-												<input type="file" name="" id="" class="form-control pb-4">
-											</div>
-											
-										</div>
-									</div>
-								</div>
-								
-								<div class="form-submit">	
-									<h4>Social Accounts</h4>
-									<div class="submit-section">
-										<div class="row">
-										
-											<div class="form-group col-md-6">
-												<label>Facebook</label>
-												<input type="text" class="form-control" value="https://facebook.com/">
-											</div>
-											
-											<div class="form-group col-md-6">
-												<label>Twitter</label>
-												<input type="email" class="form-control" value="https://twitter.com/">
-											</div>
-											
-											<div class="form-group col-md-6">
-												<label>Google Plus</label>
-												<input type="text" class="form-control" value="https://googleplus.com/">
-											</div>
-											
-											<div class="form-group col-md-6">
-												<label>LinkedIn</label>
-												<input type="text" class="form-control" value="https://linkedin.com/">
-											</div>
-											
-											<div class="form-group col-lg-12 col-md-12">
-												<button class="btn btn-theme-light-2 rounded" type="submit">Save Changes</button>
-											</div>
-											
-										</div>
+										</form>
 									</div>
 								</div>
 								

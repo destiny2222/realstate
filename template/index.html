@@ -9,98 +9,68 @@
 							<h1>Find accessible homes to rent</h1>
 						</div>
 						<div class="hero-search-content side-form">
-							
-							<div class="row">
-								<div class="col-lg-12 col-md-12 col-sm-12">
-									<div class="form-group">
-										<div class="input-with-icon">
-											<input type="text" class="form-control" placeholder="Search for a location">
-											<img src="{%  static  'assets/img/pin.svg' %}" width="18" alt="" />
+							<form action="{%  url 'index:search' %}" method="post">
+								{% csrf_token %}
+								<div class="row">
+									<div class="col-lg-12 col-md-12 col-sm-12">
+										<div class="form-group">
+											<div class="input-with-icon">
+												<input type="text" class="form-control" name="address" placeholder="Search for a location">
+												<img src="{%  static  'assets/img/pin.svg' %}" width="18" alt="" />
+											</div>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="form-group">
+											<label>Property Type</label>
+											<select id="ptypes" name="property_type" class="form-control">
+												<option selected="true" disabled="disabled">Property Type</option>
+												{% for key,value in properity_type_choices.items %}
+													<option value="{{ key }}"
+													{% if key == values.property_type %}
+													  selected
+													{% endif %}
+													>{{ value }}</option>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="form-group">
+											<label>Bed Rooms</label>
+											<select id="bedrooms" name="bedrooms" class="form-control">
+												<option selected="true" disabled="disabled">Bedrooms (Any)</option>
+												{% for key,value in bedroom_choices.items %}
+													<option value="{{ key }}"
+													{% if key == values.bedrooms %}
+													  selected
+													{% endif %}
+													>{{ value }}</option>
+												{% endfor %}
+											</select>
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="form-group">
+											<label>Price</label>
+											<input type="text" id="price" name="price" class="form-control p-4">
+										</div>
+									</div>
+									<div class="col-lg-6 col-md-6 col-sm-6">
+										<div class="form-group ">
+											<label>State </label>
+											<input type="text" name="state" id="state" class="form-control p-4">
+										</div>
+									</div>
+									<div class="col-12">
+										<div class="hero-search-action text-center">
+											<input type="submit" class="btn search-btn" value="Search Result">
 										</div>
 									</div>
 								</div>
-							</div>
-							
-							<div class="row">
-								<div class="col-lg-6 col-md-6 col-sm-6">
-									<div class="form-group">
-										<label>Min Price</label>
-										<select id="minprice" class="form-control">
-											<option value="">&nbsp;</option>
-											<option value="1">$500</option>
-											<option value="2">$1000</option>
-											<option value="3">$1500</option>
-											<option value="4">2000</option>
-											<option value="5">3000</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-6 col-md-6 col-sm-6">
-									<div class="form-group">
-										<label>Max Price</label>
-										<select id="maxprice" class="form-control">
-											<option value="">&nbsp;</option>
-											<option value="1">$1000</option>
-											<option value="2">$1500</option>
-											<option value="3">$2000</option>
-											<option value="4">$3000</option>
-											<option value="5">$5000</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							
-							<div class="row">
-								<div class="col-lg-6 col-md-6 col-sm-6">
-									<div class="form-group">
-										<label>Property Type</label>
-										<select id="ptypes" class="form-control">
-											<option value="">&nbsp;</option>
-											<option value="1">Rental</option>
-											<option value="2">Villas</option>
-											<option value="3">Offices</option>
-											<option value="4">Condos</option>
-											<option value="5">Studios</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-lg-6 col-md-6 col-sm-6">
-									<div class="form-group">
-										<label>Bed Rooms</label>
-										<select id="bedrooms" class="form-control">
-											<option value="">&nbsp;</option>
-											<option value="1">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							
-							<div class="row">
-								<div class="col-lg-12 col-md-12 col-sm-12">
-									<div class="form-group">
-										<label>Property Location</label>
-										<select id="cities" class="form-control">
-											<option value="">&nbsp;</option>
-											<option value="1">Los Angeles, CA</option>
-											<option value="2">New York City, NY</option>
-											<option value="3">Chicago, IL</option>
-											<option value="4">Houston, TX</option>
-											<option value="5">Philadelphia, PA</option>
-											<option value="6">San Antonio, TX</option>
-											<option value="7">San Jose, CA</option>
-										</select>
-									</div>
-								</div>
-							</div>
-							
+							</form>
 						</div>
-						<div class="hero-search-action">
-							<a href="#" class="btn search-btn">Search Result</a>
-						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -189,7 +159,7 @@
 									<div class="listing-short-detail-wrap">
 										<div class="listing-short-detail">
 											<span class="property-type">{{ i.status  }}</span>
-											<h4 class="listing-name verified"><a href="" class="prt-link-detail">{{ i.property_title }}</a></h4>
+											<h4 class="listing-name verified"><a href="" class="prt-link-detail">{{ i.title|truncatechars:18 }}</a></h4>
 										</div>
 										<div class="listing-short-detail-flex">
 											<h6 class="listing-card-info-price">${{  i.price }}</h6>
@@ -216,7 +186,7 @@
 										<div class="foot-location"><img src="{% static 'assets/img/pin.svg' %}" width="18" alt="" />{{ i.address|truncatechars:23 }}</div>
 									</div>
 									<div class="footer-flex">
-										<a href="property-detail.html" class="prt-view">View</a>
+										<a href="{%  url 'index:property_details'  i.slug %}" class="prt-view">View</a>
 									</div>
 								</div>
 								
@@ -229,7 +199,7 @@
 					
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 text-center">
-							<a href="listings-list-with-sidebar.html" class="btn btn-theme-light-2 rounded">Browse More Properties</a>
+							<a href="{% url 'index:propertyview' %}" class="btn btn-theme-light-2 rounded">Browse More Properties</a>
 						</div>
 					</div>
 					

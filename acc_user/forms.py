@@ -1,9 +1,18 @@
+from dataclasses import field
 from django import forms
 from django.contrib.auth import  get_user_model,authenticate
+from django.contrib.auth.forms import PasswordChangeForm
 
 from real.models import CustomUser
 
 User = get_user_model()
+
+typeofuser = [
+            ('As Customer', 'As Customer'),
+            ('As Agent', 'As Agent'),
+            ('As Agency', 'As Agency'),
+    ]
+
 class Loginform(forms.Form):
     username = forms.CharField()
     password = forms.CharField( widget=forms.PasswordInput)
@@ -22,11 +31,7 @@ class Loginform(forms.Form):
                 raise forms.ValidationError("This user is no longer active")
         return super(Loginform, self).clean(*args, **kwargs) 
 
-typeofuser = [
-            ('As Customer', 'As Customer'),
-            ('As Agent', 'As Agent'),
-            ('As Agency', 'As Agency'),
-    ]
+
 
 class Signupform(forms.Form):
 
@@ -121,4 +126,31 @@ class Signupform(forms.Form):
 class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = CustomUser
-        fields = '__all__'
+        fields = [
+            'photo',
+            'fullname',
+            'usertitle',
+            'about',
+            'city',
+            'zip',
+            'state',
+            'facebook_link',
+            'twitter_link',
+            'google_link',
+            'linkdin',
+            'email',
+            'address',
+        ]
+
+class Changepasswordform(PasswordChangeForm):
+    old_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password1 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    new_password2 = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+    # comfirm_password = forms.CharField(widget=forms.PasswordInput)
+
+    class Meta:
+        model = CustomUser
+        fields = ('old_password', 'new_password1', 'new_password2')
+
+    
+
