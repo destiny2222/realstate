@@ -18,5 +18,5 @@ from .models import  *
 admin.site.register(CustomUser) 
 admin.site.register(Listing)   
 admin.site.register(Bookmarklisting)      
-# admin.site.register(Contact_Information)      
+admin.site.register(Post)      
      

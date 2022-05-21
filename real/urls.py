@@ -15,6 +15,7 @@ urlpatterns = [
     path('property/<slug:slug>/', DetailsViews, name='property_details'),
     path('property_List', ProperityView, name='propertyview'),
     path('404', Error404 , name="404"),
+    path('blog', blogview , name="blog"),
 
 
     path('bookmarklist/<slug>/', bookmark, name="add_book_list"),

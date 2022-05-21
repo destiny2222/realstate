@@ -21,6 +21,8 @@ def homeview(request):
     return render(request, 'index.html', content)
 
 
+
+
 def AddProperity(request):
     if request.method == 'POST':
         # print(request.POST)
@@ -66,6 +68,12 @@ def Error404(request):
 
 def AboutView(request):
     return render(request, 'about-us.html')
+
+
+def blogview(request):
+    post = Post.objects.all()
+    content = {'post':post}
+    return render(request, 'blog.html')
 
 
 def search(request):

@@ -113,5 +113,13 @@ class Bookmarklisting(models.Model):
        return self.users.username
 
 
+class Post(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=20)
+    body = RichTextField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
 
 
