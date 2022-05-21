@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import  *
+# class ListingAdmin(admin.ModelAdmin):
+#     	exclude = ['slug']
 # Register your models here.
 
 
@@ -14,7 +16,7 @@ from .models import  *
 
 
 admin.site.register(CustomUser) 
-admin.site.register(Property)   
-# admin.site.register(Other_Feature)      
+admin.site.register(Listing)   
+admin.site.register(Bookmarklisting)      
 # admin.site.register(Contact_Information)      
      
