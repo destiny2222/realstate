@@ -38,7 +38,7 @@ def RegisterView(request):
             form.save()
             # profile.objects.create(user=form)
             user = form.cleaned_data.get('username')
-            messages.success(request, "password_reset successful."    + user)
+            messages.success(request, "Account Created successful.")
             
             return redirect("index:login")
         else:
