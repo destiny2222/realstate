@@ -16,7 +16,7 @@ urlpatterns = [
     path('property_List', ProperityView, name='propertyview'),
     path('404', Error404 , name="404"),
     path('blog', blogview , name="blog"),
-
+    path('property/edit/<int:pk>', EditView.as_view(), name='edit'),
 
     path('bookmarklist/<slug>/', bookmark, name="add_book_list"),
     # path('plusbooklist/<slug>/', booklist_increment , name="plusbooklist"),

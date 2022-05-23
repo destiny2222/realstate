@@ -51,8 +51,8 @@
 										</tr>
 
 										<!-- Item #1 -->
-										{%  for i in list %}
 										{%  if user.id == i.user.id %}
+										{%  for i in list %}
 										<tr>
 											<td class="property-container">
 												<img src="{{ i.property.image.url }}" alt="">
@@ -66,8 +66,8 @@
 												<a href="{%  url 'index:deletebooklist' i.id %}" class="delete"><i class="ti-close"></i> Delete</a>
 											</td>
 										</tr>
-										{% endif %}
 										{%  endfor %}
+										{% endif %}
 									</tbody>
 								</table>
 								

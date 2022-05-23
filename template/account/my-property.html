@@ -44,8 +44,8 @@
 								
 								<div class="row">
 									<!-- Single Property -->
-									{% for i in list %}
 									{%  if user.id == i.user.id %}
+									{% for i in list %}
 									<div class="col-md-12 col-sm-12 col-md-12">
 										<div class="singles-dashboard-list">
 											<div class="sd-list-left">
@@ -64,7 +64,7 @@
 													City: <a href="javascript:void(0);" class="theme-cl">{{ i.city }}</a> , Area:{{ i.area }}
 												</div>
 												<div class="action">
-													<a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ti-pencil"></i></a>
+													<a href="{% url 'index:edit' i.pk %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i class="ti-pencil"></i></a>
 													<a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="202 User View"><i class="ti-eye"></i></a>
 													<a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete Property" class="delete"><i class="ti-close"></i></a>
 													<a href="#" data-bs-toggle="tooltip" data-bs-placement="top" title="Make Featured" class="delete"><i class="ti-star"></i></a>
@@ -72,9 +72,8 @@
 											</div>
 										</div>
 									</div>
-									{%  endif %}
 									{%  endfor %}
-									
+									{%  endif %}
 								</div>
 								
 							</div>

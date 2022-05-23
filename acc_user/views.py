@@ -1,3 +1,4 @@
+from dataclasses import fields
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import authenticate, login,logout
@@ -11,6 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.contrib.auth.views import PasswordChangeView
 from django.core.mail import send_mail, BadHeaderError
+from django.views.generic import  UpdateView
 # Create your views here.
 
 User = get_user_model()
@@ -133,4 +135,13 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 
 
 
+
+class EditView(UpdateView):
+    model = Listing
+    template_name = "account/property_edit.html"
+    fields = {'title', 'price', 'status', 'property_type', 'area', 'bedrooms', 'bathrooms', 'address',
+             'city', 'state', 'zipcode', 'description', 'building_Age', 'garage', 'Rooms', 'sqft',
+             'image', 'photo_1', 'photo_2', 'photo_3', 'photo_4', 'photo_5', 'contact_name', 'contact_email',
+             'contact_phone',
+    }
 
