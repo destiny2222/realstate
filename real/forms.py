@@ -50,3 +50,5 @@ class PropertyForm(forms.ModelForm):
     #     super(PropertyForm, self).__init__(**kwargs)
     #     if user is not None:
     #         self.fields['user'].queryset = CustomUser.objects.all()
+
+ 

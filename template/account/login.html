@@ -15,8 +15,8 @@
 								</div>
 							{% endfor %} 
 							<div class="login-form">
-								<form  method="post">
-								    {%   csrf_token %}
+								<form  method="POST">
+								    {% csrf_token %}
 									<div class="form-group">
 										<label>User Name</label>
 										<div class="input-with-icon">
