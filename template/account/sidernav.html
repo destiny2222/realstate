@@ -9,9 +9,14 @@
     <div class="sidebar-widgets">
         <div class="dashboard-navbar">
             
-            <div class="d-user-avater">
+            <div class="d-user-avater" style="position: relative;">
                 <img src="{{ user.photo.url }}" class="img-fluid avater" alt="">
-                <h4>{{  user.fullname }}</h4>
+                {% if user.agent.is_approve %}
+                 <span class="material-icons-sharp" style="position: absolute;top:5%;right:20%;color: blue;">verified</span>
+                 {% else %}
+                  <span></span>                
+                 {% endif %}
+                 <h4>{{  user.fullname }}</h4>
                 <span>{{ user.city }}</span>
             </div>
             
@@ -30,4 +35,13 @@
     </div>
     
 </div>
+
+<script>
+    function openFilterSearch() {
+        document.getElementById("filter_search").style.display = "block";
+    }
+    function closeFilterSearch() {
+        document.getElementById("filter_search").style.display = "none";
+    }
+</script>
 

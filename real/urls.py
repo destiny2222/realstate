@@ -1,3 +1,4 @@
+from os import name
 from django.urls import path
 from .views import *
 from acc_user.views import *
@@ -13,11 +14,13 @@ urlpatterns = [
     path('add_property/', AddProperity, name="property"),
     path('search/', search, name='search'),
     path('property/<slug:slug>/', DetailsViews, name='property_details'),
+    path('feature/<slug:slug>/', FeatureDetails, name='property_detai'),
     path('property_List', ProperityView, name='propertyview'),
     path('404', Error404 , name="404"),
     path('blog', blogview , name="blog"),
+    path('contact', Contactview , name="contact"),
     path('property/edit/<int:pk>', EditView.as_view(), name='edit'),
-
+    path('featured/', FeatureView , name='featured'),
     path('bookmarklist/<slug>/', bookmark, name="add_book_list"),
     # path('plusbooklist/<slug>/', booklist_increment , name="plusbooklist"),
     # path('minubooklist/<slug>/', booklist_decrement , name="removebooklist"),
@@ -29,8 +32,11 @@ urlpatterns = [
     path('password_success/', change_success, name="password_success"),
     path('signup/', RegisterView, name="register"),
     path('login/', LoginView, name="login"),
+    path('agents', agentview, name="add_agent"),
+    path('agentpage', agentdashboard, name="agent_page"),
     path('logout/', logout_View, name="logout"),
     path('dashboard/', dashboardview, name="dashborad"),
+    path('del/<slug>/', del_listing, name="delete"),
     path('profile/',Myprofileview, name="myprofile"),
     path('myproperty/',mypropertyView, name="my_property"),
     path('booklist/',bookmarklistview, name="booklist"),

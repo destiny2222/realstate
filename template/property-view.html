@@ -22,7 +22,7 @@
 				
 					<div class="row justify-content-center">
 						<div class="col-lg-12 col-md-12">
-							<div class="item-shorting-box">
+							<!-- <div class="item-shorting-box">
 								<div class="item-shorting clearfix">
 									<div class="left-column pull-left"><h4 class="m-0">Found 1-10 of 142 Results</h4></div>
 								</div>
@@ -36,7 +36,7 @@
 										</select>
 									</div>
 								</div>
-							</div>
+							</div> -->
 						</div>
 					</div>
 				
@@ -59,7 +59,15 @@
 								<div class="listing-detail-wrapper">
 									<div class="listing-short-detail-wrap">
 										<div class="listing-short-detail">
-											<h4 class="listing-name verified"><a href="{%  url 'index:property_details'  i.slug %}" class="prt-link-detail">New Clue Apartment</a></h4>
+											<h4 class="listing-name verified">
+												<a href="{%  url 'index:property_details'  i.slug %}">{{ i.title|truncatechars:15 }}
+													{% if user.agent.is_approve %}
+														<span class="material-icons-sharp" style="color:red;">verified</span>
+														{% else %}
+														<h4></h4>               
+													{% endif %}
+											    </a>
+											</h4>
 											<div class="property-reviews">
 												<i class="fas fa-star filled"></i>
 												<i class="fas fa-star filled"></i>
@@ -90,7 +98,7 @@
 								
 								<div class="listing-detail-footer">
 									<div class="footer-first">
-										<div class="foot-location"><img src="assets/img/pin.svg" width="18" alt="" />{{ i.address }}</div>
+										<div class="foot-location"><img src="/static/assets/img/pin.svg" width="18" alt="" />{{ i.address }}</div>
 									</div>
 									<div class="footer-flex">
 										<a href="{%  url 'index:property_details'  i.slug %}" class="prt-view">View</a>
@@ -141,24 +149,5 @@
 			</section>
 			<!-- =========================== All Property =============================== -->	
 			
-			<!-- ============================ Call To Action ================================== -->
-			<section class="theme-bg call-to-act-wrap">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-12">
-							
-							<div class="call-to-act">
-								<div class="call-to-act-head">
-									<h3>Want to Become a Real Estate Agent?</h3>
-									<span>We'll help you to grow your career and growth.</span>
-								</div>
-								<a href="{%  url 'index:register' %}" class="btn btn-call-to-act">SignUp Today</a>
-							</div>
-							
-						</div>
-					</div>
-				</div>
-			</section>
-			<!-- ============================ Call To Action End ================================== -->
 			
 {%  endblock %}

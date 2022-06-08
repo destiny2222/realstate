@@ -1,0 +1,58 @@
+{%  extends 'include/base.html' %} 
+{%  load static %}			
+{%  block body %}
+
+<section>
+    <div class="container">
+        <form action="" method="post">
+        <div class="row">
+            <form class="simple-form">
+                {%  csrf_token %}
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <textarea class="form-control ht-80" id="message" name="message" placeholder="Messages"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="property_title" name="property_title" placeholder="Property Title">
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Your Name">
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-6 col-md-6 col-sm-12">
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Your Email">
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="form-group">
+                            <button class="btn btn-theme-light-2 rounded" type="submit">Submit Review</button>
+                        </div>
+                    </div>
+                    
+                </div>
+            </form>
+        </div>
+        </form>
+    </div>
+</section>
+
+{%  endblock %}
+
+class add_comment_to_post(CreateView):
+    model = Review
+    form_class = ReviewForm
+    template_name = 'review.html'
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        return super().form_valid(form)

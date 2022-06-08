@@ -1,0 +1,153 @@
+{%  extends 'include/base.html' %}
+{%  load static %}			
+{%  block body %}	
+			<!-- ============================ Page Title Start================================== -->
+			<div class="page-title">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							
+							<h2 class="ipt-title">Our Articles</h2>
+							<span class="ipn-subtitle">See Our Latest Articles & News</span>
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ============================ Page Title End ================================== -->
+			
+			<!-- =========================== All Property =============================== -->	
+			<section>
+				<div class="container">
+				
+					<div class="row justify-content-center">
+						<div class="col-lg-12 col-md-12">
+							<!-- <div class="item-shorting-box">
+								<div class="item-shorting clearfix">
+									<div class="left-column pull-left"><h4 class="m-0">Found 1-10 of 142 Results</h4></div>
+								</div>
+								<div class="item-shorting-box-right">
+									<div class="shorting-by">
+										<select id="shorty" class="form-control">
+											<option value="">&nbsp;</option>
+											<option value="1">Low Price</option>
+											<option value="2">High Price</option>
+											<option value="3">Most Popular</option>
+										</select>
+									</div>
+								</div>
+							</div> -->
+						</div>
+					</div>
+				
+					<div class="row">
+						<!-- Single Property -->
+						{%  for i in  feaut %}
+						<div class="col-lg-4 col-md-6 col-sm-12">
+							<div class="property-listing property-2">
+								
+								<div class="listing-img-wrapper">
+									<div class="list-img-slide">
+										<div class="click">
+											<div><a href="{%  url 'index:property_detai'  i.slug %}"><img src="{{ i.image.url  }}" class="img-fluid mx-auto" alt="" /></a></div>
+											<div><a href="{%  url 'index:property_detai'  i.slug %}"><img src="{{ i.photo_1.url  }}" class="img-fluid mx-auto" alt="" /></a></div>
+											<div><a href="{%  url 'index:property_detai'  i.slug %}"><img src="{{ i.photo_2.url  }}" class="img-fluid mx-auto" alt="" /></a></div>
+										</div>
+									</div>
+								</div>
+								
+								<div class="listing-detail-wrapper">
+									<div class="listing-short-detail-wrap">
+										<div class="listing-short-detail">
+											<h4 class="listing-name verified">
+												<a href="{%  url 'index:property_detai'  i.slug %}">{{ i.title|truncatechars:15 }}
+													{% if user.agent.is_approve %}
+														<span class="material-icons-sharp" style="color:red;">verified</span>
+														{% else %}
+														<h4></h4>               
+													{% endif %}
+											    </a>
+											</h4>
+											<div class="property-reviews">
+												<i class="fas fa-star filled"></i>
+												<i class="fas fa-star filled"></i>
+												<i class="fas fa-star filled"></i>
+												<i class="fas fa-star filled"></i>
+												<i class="fas fa-star"></i>
+											</div>
+										</div>
+										<div class="listing-short-detail-flex">
+											<h6 class="listing-card-info-price">&#8358;{{  i.price }}</h6>
+										</div>
+									</div>
+								</div>
+								
+								<div class="price-features-wrapper">
+									<div class="list-fx-features">
+										<div class="listing-card-info-icon">
+											<div class="inc-fleat-icon"><img src="{%  static 'assets/img/bed.svg' %}" width="13" alt="" /></div>{{ i.bedrooms }} Beds
+										</div>
+										<div class="listing-card-info-icon">
+											<div class="inc-fleat-icon"><img src="{%  static 'assets/img/bathtub.svg' %}" width="13" alt="" /></div>{{ i.bathrooms }} Bath
+										</div>
+										<div class="listing-card-info-icon">
+											<div class="inc-fleat-icon"><img src="{%  static 'assets/img/move.svg' %}" width="13" alt="" /></div>{{ i.sqft }} sqft
+										</div>
+									</div>
+								</div>
+								
+								<div class="listing-detail-footer">
+									<div class="footer-first">
+										<div class="foot-location"><img src="/static/assets/img/pin.svg" width="18" alt="" />{{ i.address }}</div>
+									</div>
+									<div class="footer-flex">
+										<a href="{%  url 'index:property_detai'  i.slug %}" class="prt-view">View</a>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						{%  endfor %}
+						<!-- End Single Property -->
+					</div>
+					
+					<!-- Pagination -->
+					<div class="row">
+						<div class="col-lg-12 col-md-12 col-sm-12 ">
+							
+							<ul class="pagination p-center justify-content-center">
+								<li class="page-item">
+									{% if  feaut.has_previous %}
+									<a class="page-link" href="?page={{  feaut.previous_page_number }}" aria-label="Previous">
+										<span class="ti-arrow-left"></span>
+									</a>
+								    {% else %}
+									<span class="sr-only">Prev</span>
+									{% endif %}
+								</li>
+								{% for i in  feaut.paginator.page_range %}
+									{% if  feaut.number == i %}
+										<li class="page-item active"><a class="page-link" href="#">{{ i }}</a></li>
+									{% else %}
+										<li class="page-item "><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+									{% endif %}
+								{% endfor %}
+								<li class="page-item">
+									{% if  feaut.has_next %}
+								  <a class="page-link" href="?page={{  feaut.next_page_number }}" aria-label="Next">
+									<span class="ti-arrow-right"></span>
+								  </a>
+								  {% else %}
+								  <span class="sr-only">Next</span>
+								</li>
+								{% endif %}
+							</ul>
+						</div>
+					</div>
+					
+				</div>		
+			</section>
+			<!-- =========================== All Property =============================== -->	
+			
+			
+{%  endblock %}

@@ -1,13 +1,14 @@
-from dataclasses import field
+from sre_parse import State
 from django import forms
 from django.contrib.auth import  get_user_model,authenticate
 from django.contrib.auth.forms import PasswordChangeForm
-
-from real.models import CustomUser
+from django_countries.fields import CountryField
+from django_countries.widgets import CountrySelectWidget
+from real.models import CustomUser, Agent
 
 User = get_user_model()
 
-typeofuser = [
+register_plan = [
             ('As Customer', 'As Customer'),
             ('As Agent', 'As Agent'),
             ('As Agency', 'As Agency'),
@@ -26,7 +27,7 @@ class Loginform(forms.Form):
             if not user:
                 raise forms.ValidationError("This user does not exist")
             if not user.check_password(password):
-                raise forms.ValidationError("Incorrect password")
+                raise forms.ValidationError("Incorrectm password")
             if not user.is_active:
                 raise forms.ValidationError("This user is no longer active")
         return super(Loginform, self).clean(*args, **kwargs) 
@@ -66,13 +67,13 @@ class Signupform(forms.Form):
     phonenumber = forms.CharField(widget=forms.TextInput(attrs={
          'class':'form-control',
          'type':'text',
-         'id': 'phone',
-         'name': 'phone',
+         'id': 'phonenumber',
+         'name': 'phonenumber',
          'placeholder': '123 546 5847',
     }))
-    register_as = forms.ChoiceField(choices=typeofuser,widget=forms.Select(attrs={
-        'class':'form-control',
-    }))
+    # register_as = forms.ChoiceField(choices=register_plan,widget=forms.Select(attrs={
+    #     'class':'form-control',
+    # }))
 
     def clean_fullname(self):
         fullname = self.cleaned_data['fullname'].lower()
@@ -97,10 +98,10 @@ class Signupform(forms.Form):
         return email
     
     def clean_number(self):
-        phonenumber = self.cleaned_data['phone_field'].lower()
+        phonenumber = self.cleaned_data['phonenumber'].lower()
         r = User.objects.filter(phonenumber=phonenumber)
         if r.count():
-            raise  forms.ValidationError("Phone number already exists")
+            raise  forms.ValidationError("phone number already exists")
         return phonenumber
 
 #     def clean_password2(self):
@@ -118,7 +119,7 @@ class Signupform(forms.Form):
             phonenumber=self.cleaned_data['phonenumber'],
             email=self.cleaned_data['email'],
             password=self.cleaned_data['password'],
-            register_as=self.cleaned_data['register_as'],
+            # register_as=self.cleaned_data['register_as'],
         )
         return user
 
@@ -152,5 +153,33 @@ class Changepasswordform(PasswordChangeForm):
         model = CustomUser
         fields = ('old_password', 'new_password1', 'new_password2')
 
+class VerifyAgent(forms.ModelForm):
+    class Meta:
+        model = Agent
+        fields = ( 'Designation', 'description',
+            'country',  'landline',
+        )
+    landline = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'type':'text',
+    }))
+    Designation = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+        'type':'text',
+        'placeholder': 'Designation',
+    }))
+    description = forms.CharField(widget=forms.TextInput(attrs={
+        'class':'form-control',
+    }))
+    country = CountryField(blank_label='(select country)').formfield(
+        required=False,
+        widget=CountrySelectWidget(attrs={
+            'class':'form-control',
+            'id': 'country',
+            'name': 'country',
+        }))
     
-
+    # def __init__(self, *args):
+    #     super(agentform, self).__init__(*args)
+        
+    

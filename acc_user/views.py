@@ -13,9 +13,14 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.views import PasswordChangeView
 from django.core.mail import send_mail, BadHeaderError
 from django.views.generic import  UpdateView
+from django.contrib.auth.forms import AuthenticationForm
+
 # Create your views here.
 
 User = get_user_model()
+
+
+
 
 def LoginView(request):
     if request.method == 'POST':
@@ -25,7 +30,7 @@ def LoginView(request):
         print(username, password)
         if user != None:
             login(request, user)
-            return redirect('index:home')
+            return redirect('index:add_agent')
         else:
             messages.success(request, 'There is an error loging in.')
             return redirect('index:login')
@@ -42,7 +47,7 @@ def RegisterView(request):
             user = form.cleaned_data.get('username')
             messages.success(request, "Account Created successful.")
             
-            return redirect("index:login")
+            return redirect("index:add_agent")
         else:
             messages.error(request,  form.errors)
             # messages.error(request, "Unsuccessful password_reset. Invalid information.")      
@@ -145,3 +150,24 @@ class EditView(UpdateView):
              'contact_phone',
     }
 
+
+def agentview(request):
+    if request.method == 'POST':   
+        form = VerifyAgent(request.POST)
+        if form.is_valid():
+            gent = form.save(commit=False)
+            gent.user = request.user
+            gent.save()
+            print(request.user)
+            messages.info(request, 'Successful ')
+            return redirect('index:dashborad')
+        else:
+            messages.error(request, form.errors)
+    form = VerifyAgent()    
+    return render(request, 'account/add-agent.html', {'form':form})
+  
+
+def agentdashboard(request):
+    agent = Agent.objects.all()
+    content = {'agent': agent}
+    return render(request, 'account/agent-page.html', content)

@@ -115,7 +115,7 @@
     opacity: 0;
   }
 }
-form.dropzone.dz-clickable.primary-dropzone {
+.dropzone .dz-clickable .primary-dropzone {
     background: #f9fafc;
     border: 1px solid #ebedf5;
 }
@@ -10538,7 +10538,7 @@ form.dropzone.dz-clickable.primary-dropzone {
     border-radius: 4px;
 	color:#ffffff !important;
 }
-form.dropzone.profile-logo.dz-clickable {
+.dropzone .profile-logo .dz-clickable {
     width: 120px;
     height: 120px;
     border-radius: 50%;

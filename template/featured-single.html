@@ -1,0 +1,268 @@
+{%  extends 'include/base.html' %} 
+{%  load static %}			
+{%  block body %}
+			
+
+			<!-- ============================ Hero Banner  Start================================== -->
+			<div class="featured_slick_gallery gray">
+				<div class="featured_slick_gallery-slide">
+					<div class="featured_slick_padd">
+						<a href="{{ sing.image.url  }}" class="mfp-gallery">
+							<img src="{{ sing.image.url  }}" class="img-fluid mx-auto" alt="" />
+						</a>
+					</div>
+					<div class="featured_slick_padd">
+						<a href="{{ sing.photo_1.url  }}" class="mfp-gallery">
+							<img src="{{ sing.photo_1.url  }}" class="img-fluid mx-auto" alt="" />
+						</a>
+					</div>
+					<div class="featured_slick_padd">
+						<a href="{{ sing.photo_2.url  }}" class="mfp-gallery">
+							<img src="{{ sing.photo_2.url  }}" class="img-fluid mx-auto" alt="" />
+						</a>
+					</div>
+					<div class="featured_slick_padd">
+						<a href="{{ sing.photo_3.url  }}" class="mfp-gallery">
+							<img src="{{ sing.photo_3.url  }}" class="img-fluid mx-auto" alt="" />
+						</a>
+					</div>
+				</div>
+				<a href="JavaScript:Void(0);" class="btn-view-pic top">View photos</a>
+			</div>
+			<!-- ============================ Hero Banner End ================================== -->
+			
+			<!-- ============================ Property Header Info Start================================== -->
+			<section class="gray-simple rtl p-0">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-11 col-md-12">
+					
+							<div class="property_block_wrap style-3">
+							
+								<div class="pbw-flex-1">
+									<div class="pbw-flex-thumb">
+										<img src="{{ sing.image.url  }}" width="400" class="img-fluid" alt="" />
+									</div>
+								</div>
+								
+								<div class="pbw-flex">
+									<div class="prt-detail-title-desc">
+										<span class="prt-types sale">{{  sing.status }}</span>
+										<h3>{{  sing.title  }} 
+											{% if user.agent.is_approve %}
+												<span class="material-icons-sharp" style="color:red;">verified</span>
+												{% else %}
+												<h4></h4>               
+											{% endif %}
+										</h3>
+										<span><i class="lni-map-marker"></i> {{  sing.address }}</span>
+										<h3 class="prt-price-fix">&#8358;{{ sing.price }}<sub>/month</sub></h3>
+										<div class="list-fx-features">
+											<div class="listing-card-info-icon">
+												<div class="inc-fleat-icon">
+													<img src="/static/assets/img/bed.svg" width="13" alt="">
+												</div>{{ sing.bedrooms }} Beds
+											</div>
+											<div class="listing-card-info-icon">
+												<div class="inc-fleat-icon">
+													<img src="/static/assets/img/bathtub.svg" width="13" alt="">
+												</div>{{ sing.bathrooms }} Bath
+											</div>
+											<div class="listing-card-info-icon">
+												<div class="inc-fleat-icon">
+													<img src="/static/assets/img/move.svg" width="13" alt="">
+												</div>{{ sing.sqft }} sqft
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+							
+						</div>	
+					</div>
+				</div>
+			</section>
+			<!-- ============================ Property Header Info Start================================== -->
+			
+			
+			<!-- ============================ Property Detail Start ================================== -->
+			<section class="gray-simple min">
+				<div class="container">
+					<div class="row">
+						
+						<!-- property main detail -->
+						<div class="col-lg-8 col-md-12 col-sm-12">
+							
+							<!-- sing Block Wrap -->
+							<div class="property_block_wrap style-2">
+								
+								<div class="property_block_wrap_header">
+									<a data-bs-toggle="collapse" data-parent="#features" data-bs-target="#clOne" aria-controls="clOne" href="javascript:void(0);" aria-expanded="false"><h4 class="property_block_title">Detail & Features</h4></a>
+								</div>
+								<div id="clOne" class="panel-collapse collapse show" aria-labelledby="clOne">
+									<div class="block-body">
+										<ul class="deatil_features">
+											<li><strong>Bedrooms:</strong>{{ sing.bedrooms }} Beds</li>
+											<li><strong>Bathrooms:</strong>{{ sing.bathrooms }} Bath</li>
+											<li><strong>Areas:</strong>{{ sing.area }} sq ft</li>
+											<li><strong>Garage</strong>{{ sing.garage }}</li>
+											<li><strong>Property Type:</strong>{{ sing.property_type }}</li>
+											<li><strong>Year:</strong>{{  sing.building_Age }}</li>
+											<li><strong>Status:</strong>{{  sing.status }}</li>
+											<!-- <li><strong>Swimming Pool:</strong>Yes</li>
+											<li><strong>Elevetor:</strong>Yes</li>
+											<li><strong>Fireplace:</strong>Yes</li>
+											<li><strong>Free WiFi:</strong>No</li> -->
+											
+										</ul>
+									</div>
+								</div>
+								
+							</div>
+							
+							<!-- sing Block Wrap -->
+							<div class="property_block_wrap style-2">
+								
+								<div class="property_block_wrap_header">
+									<a data-bs-toggle="collapse" data-parent="#dsrp" data-bs-target="#clTwo" aria-controls="clTwo" href="javascript:void(0);" aria-expanded="true"><h4 class="property_block_title">Description</h4></a>
+								</div>
+								<div id="clTwo" class="panel-collapse collapse show">
+									<div class="block-body">
+										{{ sing.description }}
+									</div>
+								</div>
+							</div>
+							
+							<!-- sing Block Wrap -->
+							<div class="property_block_wrap style-2">
+								
+								<div class="property_block_wrap_header">
+									<a data-bs-toggle="collapse" data-parent="#loca"  data-bs-target="#clSix" 
+									aria-controls="clSix" href="javascript:void(0);" aria-expanded="true" class="collapsed">
+									<h4 class="property_block_title">{{  sing.address }}</h4></a>
+								</div>
+
+								
+								<div id="clSix" class="panel-collapse collapse">
+									<div class="block-body">
+										<div class="map-container">
+											<div id="singleMap" data-latitude="40.7427837" 
+											data-longitude="-73.11445617675781" data-mapTitle="Our Location">
+										 
+										</div>
+										</div>
+
+									</div>
+								</div>
+								
+							</div>
+							
+							<!-- sing Reviews Block -->
+							<div class="property_block_wrap style-2">
+								
+								<div class="property_block_wrap_header">
+									<a data-bs-toggle="collapse" data-parent="#rev"  data-bs-target="#clEight" a
+									ria-controls="clEight" href="javascript:void(0);" aria-expanded="true">
+									<h4 class="property_block_title">{{ reviews.count }} Reviews</h4></a>
+								</div>
+								
+								
+								
+							</div>
+
+							
+						</div>
+						
+						<!-- property Sidebar -->
+						<div class="col-lg-4 col-md-12 col-sm-12">
+							
+							<!-- Like And Share -->
+							<div class="like_share_wrap b-0">
+								<ul class="like_share_list">
+									<li>
+										<a href="JavaScript:Void(0);" class="btn btn-likes" data-toggle="tooltip" data-original-title="Share">
+											<i class="fas fa-share"></i>Share</a>
+										</li>
+									<li>
+										<a href="{%  url 'index:add_book_list' sing.id  %}" class="btn btn-likes" data-toggle="tooltip" data-original-title="Save">
+											<i class="fas fa-heart"></i>
+											Save
+										</a>
+									</li>
+								</ul>
+							</div>
+							
+							<div class="details-sidebar">
+							
+								<!-- Agent Detail -->
+								<div class="sides-widget">
+									{%  if user.is_authenticated %}
+									<div class="sides-widget-header">
+										<div class="agent-photo"><img src="{{ user.photo.url }}" alt=""></div>
+										<div class="sides-widget-details">
+											<h4><a href="#">{{  user.fullname }}</a></h4>
+											<span><i class="lni-phone-handset"></i>{{  sing.contact_phone }}</span>
+										</div>
+										<div class="clearfix"></div>
+									</div>
+									{%  endif %}
+									<div class="sides-widget-body simple-form">
+										<div class="form-group">
+											<label>Name</label>
+											<input type="text" class="form-control" disabled placeholder="{{  sing.contact_name }}">
+										</div>
+										<div class="form-group">
+											<label>Email</label>
+											<input type="text" class="form-control" disabled placeholder="{{  sing.contact_email }}">
+										</div>
+										<div class="form-group">
+											<label>Phone No.</label>
+											<input type="text" class="form-control" disabled placeholder="{{  sing.contact_phone }}">
+										</div>
+									</div>
+								</div>
+								
+								
+								
+								<!-- Featured Property -->
+								<div class="sidebar-widgets">
+									
+									<h4>Featured Property</h4>
+									
+									<div class="sidebar_featured_property">
+										{%  for i in feature %}
+										<!-- List Sibar Property -->
+										<div class="sides_list_property">
+											<div class="sides_list_property_thumb">
+												<img src="{{   i.image.url  }}" class="img-fluid" alt="">
+											</div>
+											<div class="sides_list_property_detail">
+												<h4><a href="sing-property-1.html">{{ i.title }}</a></h4>
+												<span><i class="ti-location-pin"></i>{{  i.location }}</span>
+												<div class="lists_property_price">
+													<div class="lists_property_types">
+														<div class="property_types_vlix sale">{{ i.status }}</div>
+													</div>
+													<div class="lists_property_price_value">
+														<h4>{{ i.price }}</h4>
+													</div>
+												</div>
+											</div>
+										</div>
+										{% endfor  %}
+									</div>
+									
+								</div>
+							
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</section>
+			<!-- ============================ Property Detail End ================================== -->
+
+
+
+{%  endblock  %}

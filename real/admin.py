@@ -1,9 +1,19 @@
 from django.contrib import admin
 from .models import  *
-# class ListingAdmin(admin.ModelAdmin):
-#     	exclude = ['slug']
-# Register your models here.
 
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('name', 'message', 'email', 'approved_comment')
+    list_filter = ('approved_comment', 'created_date')
+    search_fields = ('name', 'email', 'message')
+    actions = ['approve_comments']
+
+    def approve_comments(self, request, queryset):
+        queryset.update(approved_comment=True)
+
+
+class AgentAdmin(admin.ModelAdmin):
+    list_display = ['user', 'country',  'is_approve']
 
 # class  Other_Feature(admin.TabularInline):
 #     model = Other_Feature 
@@ -19,4 +29,5 @@ admin.site.register(CustomUser)
 admin.site.register(Listing)   
 admin.site.register(Bookmarklisting)      
 admin.site.register(Post)      
-     
+admin.site.register(Featured)      
+admin.site.register(Agent, AgentAdmin)     
