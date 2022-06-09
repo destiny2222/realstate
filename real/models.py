@@ -37,7 +37,7 @@ class CustomUser(AbstractUser):
     photo = models.FileField(default='avatar.png', upload_to='images/profile_img')
     address = models.TextField()
     package=models.CharField(choices=package_plan, default='BASIC PACKAGE', max_length=100)
-    
+    created = models.DateTimeField(auto_now_add=True , null=True, blank=True)
 
 
     def _str_(self):
@@ -45,7 +45,7 @@ class CustomUser(AbstractUser):
 
 
 class Agent(models.Model):
-    user = models.OneToOneField(CustomUser, related_name='agent', on_delete=models.CASCADE)
+    user_agent = models.OneToOneField(CustomUser, related_name='agent', on_delete=models.CASCADE)
     Designation = models.CharField(max_length=50)
     landline = models.CharField(max_length=100)
     description = models.CharField(max_length=500)
@@ -53,13 +53,16 @@ class Agent(models.Model):
     is_approve = models.BooleanField(default=False)
 
 
+
+        
     def __str__(self):
-        return self.user
+        return self.user_agent.fullname
+
 
 
 
 class Listing(models.Model):
-    listing_user = models.ForeignKey(CustomUser ,on_delete=models.CASCADE)
+    listing_user = models.ForeignKey(CustomUser, related_name='listing_user' ,on_delete=models.CASCADE)
     title = models.CharField(max_length=225)
     status = models.CharField(max_length=225)
     property_type = models.CharField(max_length=225)
@@ -139,6 +142,7 @@ class Post(models.Model):
 
 
 class Featured(models.Model):
+    feature = models.ForeignKey(CustomUser, related_name='feature_count', on_delete=models.CASCADE)
     title = models.CharField(max_length=225)
     status = models.CharField(max_length=225)
     property_type = models.CharField(max_length=225)

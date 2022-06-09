@@ -153,7 +153,7 @@ class Changepasswordform(PasswordChangeForm):
         model = CustomUser
         fields = ('old_password', 'new_password1', 'new_password2')
 
-class VerifyAgent(forms.ModelForm):
+class VerifyAgentForm(forms.ModelForm):
     class Meta:
         model = Agent
         fields = ( 'Designation', 'description',

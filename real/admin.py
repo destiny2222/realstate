@@ -13,7 +13,7 @@ class ReviewAdmin(admin.ModelAdmin):
 
 
 class AgentAdmin(admin.ModelAdmin):
-    list_display = ['user', 'country',  'is_approve']
+    list_display = ['user_agent', 'country',  'is_approve']
 
 # class  Other_Feature(admin.TabularInline):
 #     model = Other_Feature 

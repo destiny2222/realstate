@@ -41,7 +41,7 @@
                         {% if user.agent.is_approve %}
                             <h4>Account: <span class="pc-title theme-cl">Verified</span></h4>
                             {% else %}
-                            <h4>Not an Agent: <span class="pc-title theme-cl"><a href="{% url 'index:add_agent' %}">verified Account </a></span></h4>               
+                            <h4>Not an Agent: <span class="pc-title theme-cl"><a href="{% url 'index:add_agent' user.id %}">verified Account </a></span></h4>               
                         {% endif %}
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="dashboard-stat widget-2">
                             <div class="dashboard-stat-content">
-                                <h4>102</h4> <span>Listings Remaining</span></div>
+                                <h4>{{  user.listing_user.count }}</h4> <span>Listings Remaining</span></div>
                             <div class="dashboard-stat-icon"><i class="ti-pie-chart"></i></div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="dashboard-stat widget-4">
                             <div class="dashboard-stat-content">
-                                <h4>30</h4> <span>Featured Remaining</span></div>
+                                <h4>{{  user.feature_count.count }}</h4> <span>Featured Remaining</span></div>
                             <div class="dashboard-stat-icon"><i class="ti-location-pin"></i></div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                     <div class="col-lg-4 col-md-6 col-sm-12">
                         <div class="dashboard-stat widget-6">
                             <div class="dashboard-stat-content">
-                                <h4>2021-02-26</h4> <span>Ends On</span></div>
+                                <h4 style="font-size:20px;">{{ user.created }}</h4> <span>Ends On</span></div>
                             <div class="dashboard-stat-icon"><i class="ti-user"></i></div>
                         </div>
                     </div>

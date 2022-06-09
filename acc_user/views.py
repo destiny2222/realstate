@@ -17,7 +17,7 @@ from django.contrib.auth.forms import AuthenticationForm
 
 # Create your views here.
 
-User = get_user_model()
+# User = get_user_model()
 
 
 
@@ -30,7 +30,7 @@ def LoginView(request):
         print(username, password)
         if user != None:
             login(request, user)
-            return redirect('index:add_agent')
+            return redirect('index:dashborad')
         else:
             messages.success(request, 'There is an error loging in.')
             return redirect('index:login')
@@ -55,7 +55,7 @@ def RegisterView(request):
 
 @login_required(login_url='index:login') 
 def dashboardview(request):
-     
+    
     return render(request, 'account/dashboard.html') 
 
 @login_required(login_url='index:login') 
@@ -151,20 +151,28 @@ class EditView(UpdateView):
     }
 
 
-def agentview(request):
-    if request.method == 'POST':   
-        form = VerifyAgent(request.POST)
-        if form.is_valid():
-            gent = form.save(commit=False)
+def agentview(request, slug):
+    # agent_obj =  get_object_or_404(Agent,pk=slug)
+    agent_obj = CustomUser.objects.filter(pk=slug)
+    if agent_obj.exists():
+        agent_obj = CustomUser.objects.get(pk=slug)
+    else:
+        return redirect("index:404")
+    verify_form = VerifyAgentForm()
+    if request.method == 'POST':
+        verify_form = VerifyAgentForm(request.POST)
+        if verify_form.is_valid():
+            gent = verify_form.save(commit=False)
+            gent.user_agent = agent_obj
+            # add user instance
             gent.user = request.user
             gent.save()
-            print(request.user)
-            messages.info(request, 'Successful ')
+            messages.info(request, 'Successful')
             return redirect('index:dashborad')
         else:
-            messages.error(request, form.errors)
-    form = VerifyAgent()    
-    return render(request, 'account/add-agent.html', {'form':form})
+            verify_form = VerifyAgentForm()  
+            messages.error(request, verify_form.errors)
+    return render(request, 'account/add-agent.html', {'verify_form':verify_form})
   
 
 def agentdashboard(request):
