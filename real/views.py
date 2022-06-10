@@ -16,14 +16,15 @@ user = get_user_model()
 def homeview(request):
     property = Listing.objects.order_by('-list_date').all()[:6]
     find_location = Featured.objects.filter(is_active=True)[:6]
-    # feat = Featured.objects.all().filter(is_active=False)
     content = {
         'property':property, 
         'find_location':find_location,
         'properity_type_choices': properity_type_choices,
         'bedroom_choices': bedroom_choices,
         'bath_rooms_choices': bath_rooms_choices,
+        # 'pro':pro,
         'values': request.POST
+
         }
     return render(request, 'index.html', content)
 

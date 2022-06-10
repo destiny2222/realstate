@@ -46,9 +46,11 @@
                     {% endfor %}
                     <div class="row">
                         <!-- Single Property -->
-                        {% if listing_user.id == i.user.id %} {% for i in list %}
+                         
+                        {% for i in list %}
+                        {% if i.listing_user.id == user.id %}
                         <div class="col-md-12 col-sm-12 col-md-12">
-
+                            
                             <div class="singles-dashboard-list">
                                 <div class="sd-list-left">
                                     <img src="{{  i.image.url }}" class="img-fluid" alt="" />
@@ -73,8 +75,10 @@
                                     </div>
                                 </div>
                             </div>
+                            
                         </div>
-                        {% endfor %} {% endif %}
+                        {%  endif %}
+                        {% endfor %} 
                     </div>
 
                 </div>

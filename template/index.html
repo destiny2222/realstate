@@ -145,6 +145,7 @@
 
         <div class="row">
             {% for i in property %}
+            
             <!-- Single Property -->
             <div class="col-lg-4 col-md-6 col-sm-12">
                 <div class="property-listing property-2">
@@ -169,7 +170,7 @@
                         <div class="listing-short-detail-wrap">
                             <div class="listing-short-detail">
                                 <span class="property-type">{{ i.status  }}
-                                    {% if user.agent.is_approve %}
+                                    {% if i.listing_user.agent.is_approve %}
                                         <span class="material-icons-sharp" style="color:red;">verified</span>
                                         {% else %}
                                         <h4></h4>               
