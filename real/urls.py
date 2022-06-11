@@ -10,7 +10,7 @@ app_name = "index"
 
 urlpatterns = [
     path('', homeview, name="home"),
-    path('about/', homeview, name="about-us"),
+    path('about/', AboutView, name="about-us"),
     path('add_property/', AddProperity, name="property"),
     path('search/', search, name='search'),
     path('property/<slug:slug>/', DetailsViews, name='property_details'),
@@ -18,6 +18,7 @@ urlpatterns = [
     path('property_List', ProperityView, name='propertyview'),
     path('404', Error404 , name="404"),
     path('blog', blogview , name="blog"),
+    path('blogdetails/<slug:slug>/', postdetailview , name="blog_details"),
     path('contact', Contactview , name="contact"),
     path('property/edit/<int:pk>', EditView.as_view(), name='edit'),
     path('featured/', FeatureView , name='featured'),

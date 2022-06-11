@@ -1,4 +1,3 @@
-from email import message
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from ckeditor.fields import RichTextField
@@ -135,14 +134,20 @@ class Post(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=20)
     body = RichTextField()
+    image = models.FileField()
     created = models.DateTimeField(auto_now_add=True)
-
+    slug = models.SlugField(default='', null=True, blank=True)
+    
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
+        
     def __str__(self):
         return self.title
 
 
 class Featured(models.Model):
-    feature = models.ForeignKey(CustomUser, related_name='feature_count', on_delete=models.CASCADE)
+    # feature = models.ForeignKey('self', related_name='feature_count', on_delete=models.CASCADE)
     title = models.CharField(max_length=225)
     status = models.CharField(max_length=225)
     property_type = models.CharField(max_length=225)

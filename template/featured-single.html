@@ -55,7 +55,7 @@
 												<h4></h4>               
 											{% endif %}
 										</h3>
-										<span><i class="lni-map-marker"></i> {{  sing.address }}</span>
+										<span><i class="lni-map-marker"></i> {{  sing.location }}</span>
 										<h3 class="prt-price-fix">&#8358;{{ sing.price }}<sub>/month</sub></h3>
 										<div class="list-fx-features">
 											<div class="listing-card-info-icon">
@@ -135,41 +135,8 @@
 							</div>
 							
 							<!-- sing Block Wrap -->
-							<div class="property_block_wrap style-2">
-								
-								<div class="property_block_wrap_header">
-									<a data-bs-toggle="collapse" data-parent="#loca"  data-bs-target="#clSix" 
-									aria-controls="clSix" href="javascript:void(0);" aria-expanded="true" class="collapsed">
-									<h4 class="property_block_title">{{  sing.address }}</h4></a>
-								</div>
-
-								
-								<div id="clSix" class="panel-collapse collapse">
-									<div class="block-body">
-										<div class="map-container">
-											<div id="singleMap" data-latitude="40.7427837" 
-											data-longitude="-73.11445617675781" data-mapTitle="Our Location">
-										 
-										</div>
-										</div>
-
-									</div>
-								</div>
-								
-							</div>
 							
-							<!-- sing Reviews Block -->
-							<div class="property_block_wrap style-2">
-								
-								<div class="property_block_wrap_header">
-									<a data-bs-toggle="collapse" data-parent="#rev"  data-bs-target="#clEight" a
-									ria-controls="clEight" href="javascript:void(0);" aria-expanded="true">
-									<h4 class="property_block_title">{{ reviews.count }} Reviews</h4></a>
-								</div>
-								
-								
-								
-							</div>
+						
 
 							
 						</div>
@@ -177,51 +144,9 @@
 						<!-- property Sidebar -->
 						<div class="col-lg-4 col-md-12 col-sm-12">
 							
-							<!-- Like And Share -->
-							<div class="like_share_wrap b-0">
-								<ul class="like_share_list">
-									<li>
-										<a href="JavaScript:Void(0);" class="btn btn-likes" data-toggle="tooltip" data-original-title="Share">
-											<i class="fas fa-share"></i>Share</a>
-										</li>
-									<li>
-										<a href="{%  url 'index:add_book_list' sing.id  %}" class="btn btn-likes" data-toggle="tooltip" data-original-title="Save">
-											<i class="fas fa-heart"></i>
-											Save
-										</a>
-									</li>
-								</ul>
-							</div>
 							
 							<div class="details-sidebar">
 							
-								<!-- Agent Detail -->
-								<div class="sides-widget">
-									{%  if user.is_authenticated %}
-									<div class="sides-widget-header">
-										<div class="agent-photo"><img src="{{ user.photo.url }}" alt=""></div>
-										<div class="sides-widget-details">
-											<h4><a href="#">{{  user.fullname }}</a></h4>
-											<span><i class="lni-phone-handset"></i>{{  sing.contact_phone }}</span>
-										</div>
-										<div class="clearfix"></div>
-									</div>
-									{%  endif %}
-									<div class="sides-widget-body simple-form">
-										<div class="form-group">
-											<label>Name</label>
-											<input type="text" class="form-control" disabled placeholder="{{  sing.contact_name }}">
-										</div>
-										<div class="form-group">
-											<label>Email</label>
-											<input type="text" class="form-control" disabled placeholder="{{  sing.contact_email }}">
-										</div>
-										<div class="form-group">
-											<label>Phone No.</label>
-											<input type="text" class="form-control" disabled placeholder="{{  sing.contact_phone }}">
-										</div>
-									</div>
-								</div>
 								
 								
 								
