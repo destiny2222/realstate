@@ -69,7 +69,7 @@ class PropertyForm(ModelForm):
             'Rooms':forms.Select(choices=room, attrs={'class': 'form-control', 'required': 'True'}),
             'contact_name':forms.TextInput(attrs={'class': 'form-control', 'required': 'True'}),
             'contact_email':forms.EmailInput(attrs={'class': 'form-control', 'required': 'True'}),
-            'contact_phone':forms.TextInput(attrs={'class': 'form-control'}),
+            'contact_phone':forms.TextInput(attrs={'class': 'form-control', 'required': 'True'}),
         }
 
 
