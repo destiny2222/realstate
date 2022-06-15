@@ -1,3 +1,4 @@
+(function($){
 "use strict";
 
 var _createClass = (function () {
@@ -4347,3 +4348,4 @@ function __guardMethod__(obj, methodName, transform) {
     return undefined;
   }
 }
+})(jQuery);

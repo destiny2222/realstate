@@ -1,4 +1,4 @@
-$(function () {
+(function($) {
   "use strict";
 
   $(window).on("load", function () {
@@ -906,4 +906,4 @@ $(function () {
       searchTypeButtons();
     });
   }
-});
+})(jQuery);
