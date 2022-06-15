@@ -26,7 +26,6 @@ class CustomUser(AbstractUser):
     city = models.CharField(max_length=50)
     zip = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
-    # register_as = models.CharField( max_length=100, default='')
     username = models.CharField(max_length=20,unique=True)
     phonenumber = models.CharField(max_length=15, default='', blank=True, null=True)
     facebook_link = models.CharField(max_length=50)
@@ -50,8 +49,11 @@ class Agent(models.Model):
     description = models.CharField(max_length=500)
     country = CountryField(multiple=False)
     is_approve = models.BooleanField(default=False)
-
-
+    slug = models.SlugField(default='', null=True, blank=True)
+   
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.landline)
+        super(Agent, self).save(*args, **kwargs)
 
         
     def __str__(self):
@@ -83,9 +85,9 @@ class Listing(models.Model):
     photo_1 = models.ImageField(upload_to='images/photos', blank=True, null=True)
     photo_2 = models.ImageField(upload_to='images/photos', blank=True, null=True)
     photo_3 = models.ImageField(upload_to='images/photos', blank=True, null=True)
-    contact_name = models.CharField(max_length=100)
-    contact_email = models.CharField(max_length=225)
-    contact_phone = models.CharField(max_length=100, blank=True , null=True, unique=True)
+    # contact_name = models.CharField(max_length=100)
+    # contact_email = models.CharField(max_length=225)
+    # contact_phone = models.CharField(max_length=100, blank=True , null=True, unique=True)
     list_date = models.DateTimeField(default=datetime.now, blank=True)
     is_published = models.BooleanField(default=True)
     slug = models.SlugField(default='', null=True, blank=True)

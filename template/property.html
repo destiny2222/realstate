@@ -25,16 +25,13 @@
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 						
-							<div class="alert alert-success" role="alert">
-							<p>Please, Sign In before you submit a property. If you don't have an account you can create one by 
-								<a href="{% url  'index:login' %}">Clicking Here</a></p>
-							</div>
+							
 						
 						</div>
 						
 						<!-- Submit Form -->
 						<div class="col-lg-12 col-md-12">
-						
+						    {%  if user.agent.is_approve %}
 							<div class="submit-page">
 								
 								<!-- Basic Information -->
@@ -65,6 +62,16 @@
 								
 											
 							</div>
+							{% else %}
+							<div class="row justify-content-center">
+								<div class="alert alert-success m-2" role="alert" style="display: inline-block;">
+									<p>
+										Verify your account,  before you can submit a 
+										property. <a href="{% url  'index:add_agent' user.id %}">Clicking Here</a> to verify Account   
+									</p>
+								</div>
+							</div>
+						    {%  endif %}		
 						</div>
 						
 					</div>

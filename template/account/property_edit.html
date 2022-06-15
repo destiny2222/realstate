@@ -1,0 +1,142 @@
+{%  extends 'include/base.html' %}
+{%  load static %}			
+{%  block body %}
+			<!-- ============================ Page Title Start================================== -->
+			<div class="page-title">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							
+							<h2 class="ipt-title">Edit </h2>
+							<!-- <span class="ipn-subtitle">Welcome To Your Account</span> -->
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ============================ Page Title End ================================== -->
+			
+			<!-- ============================ User Dashboard ================================== -->
+			<section class="bg-light">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="filter_search_opt">
+								<a href="javascript:void(0);" onclick="openFilterSearch()">Dashboard Navigation<i class="ml-2 ti-menu"></i></a>
+							</div>
+						</div>
+					</div>
+								
+					<div class="row">
+						
+						<div class="col-lg-3 col-md-12">
+							{%  include 'account/sidernav.html' %}
+						</div>
+						
+						<div class="col-lg-9 col-md-12">
+							<div class="dashboard-wraper">
+							
+								<!-- Basic Information -->
+								<div class="form-submit">	
+									<h4>My Account</h4>
+									<div class="submit-section">
+                                        {%  if messages %}
+											{%  for message in messages %}
+												<div {%  if message.tags %}  class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+													{{ message }}
+												</div>
+												{% endif %}
+											{% endfor %}
+										{% else %}
+										{% endif %}
+										<form action="" method="POST" enctype="multipart/form-data">
+											{% csrf_token %}
+										    <div class="row">
+												<div class="form-group col-md-12">
+													<label for="title">Title</label>
+													{{  form.title }}
+												</div>
+												<div class="form-group col-md-6">
+													<label for="title">Property Type</label>
+													{{  form.property_type }}
+												</div>
+												<div class="form-group col-md-6">
+													<label for="title">Bedrooms</label>
+													{{  form.bedrooms }}
+												</div>
+												<div class="form-group col-md-6">
+													<label for="title">Bathrooms</label>
+													{{  form.bathrooms }}
+												</div>
+												<div class="form-group col-md-6">
+													<label for="title">Sqft</label>
+													{{  form.sqft }}
+												</div>
+												<div class="form-group col-md-6">
+													<label for="title">Building Age</label>
+													{{  form.building_Age }}
+												</div>
+												<div class="form-group col-md-6">
+													<label for="title">Garage</label>
+													{{  form.garage }}
+												</div>
+												<div class="form-group col-md-6">
+													<label for="title">Status</label>
+													{{  form.status }}
+												</div>
+												<div class="form-group col-md-6">
+													<label for="title">Rooms</label>
+													{{  form.Rooms }}
+												</div>
+												<div class="form-group col-md-6">
+													<!-- <label for="title">Image</label> -->
+													{{  form.image }}
+												</div>
+												<div class="form-group col-md-6">
+													<!-- <label for="title">Image</label> -->
+													{{  form.photo_1 }}
+												</div>
+												<div class="form-group col-md-6">
+													<!-- <label for="title">Image</label> -->
+													{{  form.photo_2 }}
+												</div>
+												<div class="form-group col-md-6">
+													<!-- <label for="title">Image</label> -->
+													{{  form.photo_3 }}
+												</div>
+												<div class="form-group col-md-12">
+													<label for="title">Address</label>
+													{{  form.address }}
+												</div>
+												<div class="form-group col-md-6">
+													<label for="title">City</label>
+													{{  form.city }}
+												</div>
+												<div class="form-group col-md-6">
+													<label for="title">State</label>
+													{{  form.state }}
+												</div>
+												<div class="form-group col-md-6">
+													<label for="title">Zipcode</label>
+													{{  form.zipcode }}
+												</div>
+												
+												<div class="form-group col-lg-12 col-md-12">
+													<input class="btn btn-theme-light-2 rounded" type="submit" value="Update Changes">
+												</div>
+											</div>
+										</form>
+										
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</section>
+			<!-- ============================ User Dashboard End ================================== -->
+			
+		
+{%  endblock body %}	

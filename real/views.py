@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.http import   Http404,HttpResponse
 from real.models import *
 from .forms import *
+from django.urls import reverse_lazy
+from django.views.generic import  UpdateView
 from .choices import bedroom_choices, properity_type_choices ,bath_rooms_choices
 from django.core.paginator import  Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth import get_user_model
@@ -39,7 +41,7 @@ def AddProperity(request):
             form = PropertyFormAdmin(request.POST, request.FILES)
             if form.is_valid():
                 form.save()
-                messages.info(request, 'Property Added Successful')
+                messages.success(request, 'Property Added Successful')
                 return redirect('index:my_property')
         else:
             form = PropertyForm(request.POST, request.FILES)
@@ -47,7 +49,7 @@ def AddProperity(request):
                 list = form.save(commit=False)
                 list.listing_user = request.user
                 list.save()
-                messages.info(request, 'Property Added Successful')
+                messages.success(request, 'Property Added Successful')
                 return redirect('index:my_property')
     else:
         # just going to the page, not submitting
@@ -58,7 +60,44 @@ def AddProperity(request):
             if 'submitted' in request.GET:
                 submitted = True
             messages.error(request, form.errors)
-    return render(request, 'property.html', {'form':form})    
+    return render(request, 'property.html', {'form':form})  
+
+
+
+def EditView(request, slug):
+    post = Listing.objects.get(slug=slug) 
+    if request.method == "POST":
+        form = PropertyForm(request.POST, instance=post)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.listing_user = request.user
+            post.save()
+            return redirect("index:my_property")
+    else:
+        # messages.error(request, form.errors)
+        form = PropertyForm(instance=post)
+    context = {'form': form}
+    return render(request, 'account/property_edit.html', context)
+    
+
+
+# form = Edit_Listing()
+#     if request.method == "POST":
+#         form = Edit_Listing(data=request.POST,instance=request.user, files=request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             messages.success(request, f"Your Property Info has been updated")
+#             return redirect('index:edit', slug=post.slug)
+#         else:
+#             form = Edit_Listing(instance=request.user)
+#             messages.error(request, form.errors) 
+
+
+# class EditView(UpdateView):
+#     model = Listing
+#     template_name = "account/property_edit.html"
+#     form_class = Edit_Listing
+#     success_url = reverse_lazy('index:home')      
 
 
 @login_required(login_url='indexurl:login') 
@@ -252,3 +291,6 @@ def Contactview(request):
 #     template_name = "blog-detail.html"    
 
 
+def Faq(request):
+
+    return render(request, 'faq.html')
