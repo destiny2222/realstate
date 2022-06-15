@@ -48,11 +48,11 @@
 								
 								<div class="blog-body">
 									<h4 class="bl-title"><a href="">
-									  {{  i.title }}	
+									  {{  i.title|truncatechars:50 }}	
 									</a>
 									</h4>
-									<p>{{ i.body|safe }}</p>
-									<a href="" class="bl-continue">Continue</a>
+									<p>{{ i.body|safe|truncatechars:100 }}</p>
+									<a href="{%  url 'index:blog_details'  i.slug   %}" class="bl-continue">Continue</a>
 								</div>
 								
 							</div>

@@ -113,8 +113,8 @@ def DetailsViews(request, slug):
 
 def FeatureView(request):
     feaut = Featured.objects.all()
-    page = request.GET.get('page')
     paginator = Paginator(feaut, 3)
+    page = request.GET.get('page')
     try:
         feaut = paginator.page(page)
     except PageNotAnInteger:
@@ -124,13 +124,13 @@ def FeatureView(request):
         # if the page is out of range deliver the last page
         feaut = paginator.page(paginator.num_pages) 
     content = {'feaut':feaut, 'page':page,}
-    return render(request, 'property-view.html', content)
+    return render(request, 'featured.html', content)
 
 def FeatureDetails(request, slug):
     feature = Featured.objects.order_by('-list_date').all()[:4]
     sing = Featured.objects.filter(slug=slug)
     if sing.exists():
-        sing = Listing.objects.get(slug=slug)
+        sing = Featured.objects.get(slug=slug)
     else:
         return redirect("index:404")          
     content = {'sing':sing, 'feature':feature,}    
@@ -165,11 +165,13 @@ def blogview(request):
 
 def postdetailview(request, slug):
     details = Post.objects.filter(slug=slug)
+    recentpost = Post.objects.all().order_by('-id')[:4]
     if details.exists():
         details = Post.objects.get(slug=slug)
     else:
         return redirect("index:404")
-    return render(request, 'blog-detail.html')
+    content = {'details':details, 'recentpost':recentpost}    
+    return render(request, 'blog-detail.html', content)
 
 
 def search(request):

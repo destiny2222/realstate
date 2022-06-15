@@ -7,8 +7,8 @@
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							
-							<h2 class="ipt-title">Our Articles</h2>
-							<span class="ipn-subtitle">See Our Latest Articles & News</span>
+							<h2 class="ipt-title">List of Property</h2>
+							<span class="ipn-subtitle">Properties</span>
 							
 						</div>
 					</div>
@@ -61,8 +61,8 @@
 										<div class="listing-short-detail">
 											<h4 class="listing-name verified">
 												<a href="{%  url 'index:property_details'  i.slug %}">{{ i.title|truncatechars:15 }}
-													{% if user.agent.is_approve %}
-														<span class="material-icons-sharp" style="color:red;">verified</span>
+													{% if i.listing_user.agent.is_approve %}
+														<span class="material-icons-sharp" style="color:blue;">verified</span>
 														{% else %}
 														<h4></h4>               
 													{% endif %}
@@ -151,3 +151,4 @@
 			
 			
 {%  endblock %}
+

@@ -1,25 +1,25 @@
 {%  extends 'include/base.html' %}
-{%  load static %}			
-{%  block body %}	
+{%  load static %}
+{%  block body %}
 			<!-- ============================ Page Title Start================================== -->
 			<div class="page-title">
 				<div class="container">
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
-							
-							<h2 class="ipt-title">Our Articles</h2>
-							<span class="ipn-subtitle">See Our Latest Articles & News</span>
-							
+
+							<h2 class="ipt-title">List of Features</h2>
+							<span class="ipn-subtitle">Features</span>
+
 						</div>
 					</div>
 				</div>
 			</div>
 			<!-- ============================ Page Title End ================================== -->
-			
-			<!-- =========================== All Property =============================== -->	
+
+			<!-- =========================== All Property =============================== -->
 			<section>
 				<div class="container">
-				
+
 					<div class="row justify-content-center">
 						<div class="col-lg-12 col-md-12">
 							<!-- <div class="item-shorting-box">
@@ -39,13 +39,13 @@
 							</div> -->
 						</div>
 					</div>
-				
+
 					<div class="row">
 						<!-- Single Property -->
 						{%  for i in  feaut %}
 						<div class="col-lg-4 col-md-6 col-sm-12">
 							<div class="property-listing property-2">
-								
+
 								<div class="listing-img-wrapper">
 									<div class="list-img-slide">
 										<div class="click">
@@ -55,16 +55,16 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="listing-detail-wrapper">
 									<div class="listing-short-detail-wrap">
 										<div class="listing-short-detail">
 											<h4 class="listing-name verified">
 												<a href="{%  url 'index:property_detai'  i.slug %}">{{ i.title|truncatechars:15 }}
 													{% if user.agent.is_approve %}
-														<span class="material-icons-sharp" style="color:red;">verified</span>
+														<span class="material-icons-sharp" style="color:blue;">verified</span>
 														{% else %}
-														<h4></h4>               
+														<h4></h4>
 													{% endif %}
 											    </a>
 											</h4>
@@ -81,7 +81,7 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="price-features-wrapper">
 									<div class="list-fx-features">
 										<div class="listing-card-info-icon">
@@ -95,26 +95,26 @@
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="listing-detail-footer">
 									<div class="footer-first">
-										<div class="foot-location"><img src="/static/assets/img/pin.svg" width="18" alt="" />{{ i.address }}</div>
+										<div class="foot-location"><img src="/static/assets/img/pin.svg" width="18" alt="" />{{ i.location }}</div>
 									</div>
 									<div class="footer-flex">
 										<a href="{%  url 'index:property_detai'  i.slug %}" class="prt-view">View</a>
 									</div>
 								</div>
-								
+
 							</div>
 						</div>
 						{%  endfor %}
 						<!-- End Single Property -->
 					</div>
-					
+
 					<!-- Pagination -->
 					<div class="row">
 						<div class="col-lg-12 col-md-12 col-sm-12 ">
-							
+
 							<ul class="pagination p-center justify-content-center">
 								<li class="page-item">
 									{% if  feaut.has_previous %}
@@ -144,10 +144,10 @@
 							</ul>
 						</div>
 					</div>
-					
-				</div>		
+
+				</div>
 			</section>
-			<!-- =========================== All Property =============================== -->	
-			
-			
+			<!-- =========================== All Property =============================== -->
+
+
 {%  endblock %}
