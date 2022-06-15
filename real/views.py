@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render,get_object_or_404
 from django.contrib import messages
 from django.http import   Http404,HttpResponse
 from real.models import *
+from django.contrib.messages.views import SuccessMessageMixin
 from .forms import *
 from django.urls import reverse_lazy
 from django.views.generic import  UpdateView
@@ -64,40 +65,32 @@ def AddProperity(request):
 
 
 
-def EditView(request, slug):
-    post = Listing.objects.get(slug=slug) 
-    if request.method == "POST":
-        form = PropertyForm(request.POST, instance=post)
-        if form.is_valid():
-            post = form.save(commit=False)
-            post.listing_user = request.user
-            post.save()
-            return redirect("index:my_property")
-    else:
-        # messages.error(request, form.errors)
-        form = PropertyForm(instance=post)
-    context = {'form': form}
-    return render(request, 'account/property_edit.html', context)
+# def EditView(request, slug):
+#     post = Listing.objects.get(slug=slug) 
+#     form = PropertyForm()
+#     if request.method == "POST":
+#         form = PropertyForm(instance=post,data=request.POST)
+#         if form.is_valid():
+#             post = form.save(commit=False)
+#             post.user = request.user
+#             post.save()
+#             messages.success(request, f"Your Property Info has been updated")
+#             return redirect("index:my_property")
+#         else:
+#             messages.success(request, form.errors)
+#     context = {'form': form}
+#     return render(request, 'account/property_edit.html', context)
     
 
 
-# form = Edit_Listing()
-#     if request.method == "POST":
-#         form = Edit_Listing(data=request.POST,instance=request.user, files=request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             messages.success(request, f"Your Property Info has been updated")
-#             return redirect('index:edit', slug=post.slug)
-#         else:
-#             form = Edit_Listing(instance=request.user)
-#             messages.error(request, form.errors) 
 
-
-# class EditView(UpdateView):
-#     model = Listing
-#     template_name = "account/property_edit.html"
-#     form_class = Edit_Listing
-#     success_url = reverse_lazy('index:home')      
+class EditView(SuccessMessageMixin,UpdateView):
+    model = Listing
+    template_name = "account/property_edit.html"
+    form_class = PropertyForm
+    success_url = reverse_lazy('index:my_property')
+    success_message = 'Your Property Info has been updated!!!!'
+      
 
 
 @login_required(login_url='indexurl:login') 
@@ -281,14 +274,7 @@ def Contactview(request):
     form = ContactForm()
     return render(request, 'contact.html')
 
-# class Postview(ListView):
-#     model = Post
-#     template_name = "blog.html"
-
-
-# class PostDetails(DetailView):
-#     model = Post
-#     template_name = "blog-detail.html"    
+   
 
 
 def Faq(request):

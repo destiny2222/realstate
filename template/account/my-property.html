@@ -39,11 +39,15 @@
                     <div class="form-submit">
                         <h4>My Property</h4>
                     </div>
-                    {% for message in messages %}
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        {{ message }}
-                    </div>
-                    {% endfor %}
+                    {%  if messages %}
+                        {%  for message in messages %}
+                            <div {%  if message.tags %}  class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                    {% endif %}
                     <div class="row">
                         <!-- Single Property -->
                          
