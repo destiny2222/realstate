@@ -43,6 +43,14 @@
                             {% else %}
                             <h4>Not an Agent: <span class="pc-title theme-cl"><a href="{% url 'index:add_agent' user.id %}">verified Account </a></span></h4>               
                         {% endif %}
+                        {%  if messages %}
+								{%  for message in messages %}
+									<div {%  if message.tags %}  class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert" {% endif %}>
+										{{ message }}
+									</div>
+                            {% endfor %}
+                        {% else %}
+                        {% endif %}
                     </div>
                 </div>
 

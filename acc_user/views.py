@@ -23,18 +23,22 @@ from django.contrib.auth.forms import AuthenticationForm
 
 
 def LoginView(request):
+    form = Loginform()
     if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        print(username, password)
-        if user != None:
-            login(request, user)
-            return redirect('index:dashborad')
+        form = Loginform(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user != None:
+                login(request, user)
+                request.session['username'] = username
+                return redirect('index:dashborad')
         else:
-            messages.success(request, 'There is an error loging in.')
+            messages.success(request, "Incorrect Username or Password")
+            form = Loginform(None)
             return redirect('index:login')
-    return render(request, 'account/login.html', {})
+    return render(request, 'account/login.html', {'form':form})
 
 
 def RegisterView(request):
@@ -42,15 +46,22 @@ def RegisterView(request):
     if request.method == "POST":
         form = Signupform(request.POST or None)
         if form.is_valid():
-            form.save()
-            # profile.objects.create(user=form)
-            user = form.cleaned_data.get('username')
-            messages.success(request, "Account Created successful.")
+            user = form.save()
+            username = form.cleaned_data.get('username')
+            messages.success(request, f"New Account Created: {username}")
+            login(request, user)
+            messages.info(request, f"You are now logged in as {username}")
         
-            return redirect("index:login")
+            return redirect("index:dashborad")
         else:
-            messages.error(request,  form.errors)
-            # messages.error(request, "Unsuccessful password_reset. Invalid information.")      
+            password = form.data['password']
+            password2 = form.data['confirm_password']
+            for msg in form.errors.as_data():
+                if msg == 'confirm_password' and password == password2:
+                    messages.error(request, f"Selected password: {password} is not strong enough")
+                elif msg == 'password2' and password != password2:
+                    messages.error(request, f"Password: '{password}' and Confirmation Password: '{password2}' do not match")
+            # messages.error(request,  form.errors)      
     return render(request, 'account/signup.html', {"form": form})
 
 @login_required(login_url='index:login') 
@@ -65,7 +76,7 @@ def Myprofileview(request):
         form = ProfileUpdateForm(data=request.POST or None,instance=request.user, files=request.FILES)
         if form.is_valid():
             form.save()
-            messages.success(request,'your profile is set')
+            messages.success(request,'your profile is updated')
             return redirect('index:dashborad')
         else:
             messages.error(request,  form.errors)
@@ -140,17 +151,6 @@ class ResetPasswordView(SuccessMessageMixin, PasswordResetView):
 
 
 
-
-class EditView(UpdateView):
-    model = Listing
-    template_name = "account/property_edit.html"
-    fields = {'title', 'price', 'status', 'property_type', 'area', 'bedrooms', 'bathrooms', 'address',
-             'city', 'state', 'zipcode', 'description', 'building_Age', 'garage', 'Rooms', 'sqft',
-             'image', 'photo_1', 'photo_2', 'photo_3', 'photo_4', 'photo_5', 'contact_name', 'contact_email',
-             'contact_phone',
-    }
-
-
 def agentview(request, slug):
     # agent_obj =  get_object_or_404(Agent,pk=slug)
     agent_obj = CustomUser.objects.filter(pk=slug)
@@ -167,15 +167,23 @@ def agentview(request, slug):
             # add user instance
             gent.user = request.user
             gent.save()
-            messages.info(request, 'Successful')
-            return redirect('index:dashborad')
+            messages.info(request, f"Submitte Successful under going  check by adminitrator, Please kindly return back to your profile,")
+            return redirect('index:agent_page')
         else:
             verify_form = VerifyAgentForm()  
             messages.error(request, verify_form.errors)
     return render(request, 'account/add-agent.html', {'verify_form':verify_form})
+
   
 
 def agentdashboard(request):
-    agent = Agent.objects.all()
-    content = {'agent': agent}
-    return render(request, 'account/agent-page.html', content)
+
+    return render(request, 'account/agent-suc.html')
+
+
+def admindashboard(request):
+    total_count = User.objects.all().count()
+    count = User.objects.filter(last_login__startswith=timezone.now().date()).count()
+    context = {'count':count, 'total_count':total_count}
+    return render(request, 'admin/index.html', context)
+  
