@@ -33,7 +33,11 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 # Application definition
 
 INSTALLED_APPS = [
+<<<<<<< HEAD
     'jazzmin',  
+=======
+    'jazzmin',
+>>>>>>> e011f436476e9f508cc5359dfee71b14489143f6
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -155,8 +159,8 @@ JAZZMIN_SETTINGS = {
     # Custom links to append to app groups, keyed on app name
     "custom_links": {
         "books": [{
-            "name": "Make Messages", 
-            "url": "make_messages", 
+            "name": "Make Messages",
+            "url": "make_messages",
             "icon": "fas fa-comments",
             "permissions": ["books.view_book"]
         }]
@@ -200,7 +204,7 @@ JAZZMIN_SETTINGS = {
     "changeform_format": "horizontal_tabs",
     # override change forms on a per modeladmin basis
     "changeform_format_overrides": {"auth.user": "collapsible", "auth.group": "vertical_tabs"},
-   
+
 }
 
 MIDDLEWARE = [
