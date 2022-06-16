@@ -97,17 +97,32 @@ def mypropertyView(request):
 
 
 def bookmarklistview(request):
-    list = Bookmarklisting.objects.filter(users=request.user)
+    list = Bookmarklisting.objects.filter(user=request.user)
     content = {'list': list}
     return render(request, 'account/bookmark-list.html', content)    
 
 @login_required(login_url='/login/')
 def bookmark(request, slug):
     bookmark = Listing.objects.get(id=slug)
-    Bookmarklisting.objects.create(property=bookmark, users=request.user)
+    if (Bookmarklisting.objects.filter(user=request.user) and Bookmarklisting.objects.filter(property=bookmark)).exists():
+        print("Item is exists")
+        messages.success(request, f"Bookmark already exists for this property")
+        return redirect("index:property_details", slug=bookmark.slug)
+    else:
+        Bookmarklisting.objects.get_or_create(user=request.user, property=bookmark)
+    
+    # Bookmarklisting.objects.create(property=bookmark, mark=request.user)
     return redirect('index:booklist')
 
+@login_required(login_url='/login/')
+def booklist_delete(request, slug):
+    qs = Bookmarklisting.objects.get(user=request.user, id=slug)
+    qs.delete()
+    return redirect('index:booklist')
 
+# deleted = Wishlist.objects.filter(user=user, product=product).delete()
+#     if deleted == 0:
+#         # Can do something when nothing was deleted if you like
 # @login_required(login_url='/login/')
 # def booklist_increment(request, slug):
 #     qr = Bookmarklisting.objects.get(users=request.user, id=slug)
@@ -123,20 +138,16 @@ def bookmark(request, slug):
 #         qr.save()
 #     return redirect('index:booklist')
 
-@login_required(login_url='/login/')
-def booklist_delete(request, slug):
-    qs = Bookmarklisting.objects.get(users=request.user, id=slug)
-    qs.delete()
-    return redirect('index:booklist')
 
-class changepassword(PasswordChangeView):
+
+class changepassword(SuccessMessageMixin,PasswordChangeView):
     form_class = Changepasswordform
     template_name = 'account/change-password.html'
-    success_url = reverse_lazy('index:password_success')   
+    success_url = reverse_lazy('index:password_success')
+    success_message = 'Your Password as been change Successful!!!!'   
 
 
 def change_success(request):
-
     return render(request, 'account/change_success.html')
 
 class ResetPasswordView(SuccessMessageMixin, PasswordResetView):

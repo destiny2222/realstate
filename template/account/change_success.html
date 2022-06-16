@@ -1,1 +1,63 @@
-successful change password
+{%  extends 'include/base.html' %}
+{%  load static %}			
+{%  block body %}
+			<!-- ============================ Page Title Start================================== -->
+			<div class="page-title">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							
+							<!-- <h2 class="ipt-title">Edit </h2> -->
+							<!-- <span class="ipn-subtitle">Welcome To Your Account</span> -->
+							
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ============================ Page Title End ================================== -->
+			
+			<!-- ============================ User Dashboard ================================== -->
+			<section class="bg-light">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-12 col-md-12">
+							<div class="filter_search_opt">
+								<a href="javascript:void(0);" onclick="openFilterSearch()">Dashboard Navigation<i class="ml-2 ti-menu"></i></a>
+							</div>
+						</div>
+					</div>
+								
+					<div class="row">
+						
+						<div class="col-lg-3 col-md-12">
+							{%  include 'account/sidernav.html' %}
+						</div>
+						
+						<div class="col-lg-9 col-md-12">
+							<div class="dashboard-wraper">
+							
+								<!-- Basic Information -->
+								<div class="form-submit">
+									<div class="submit-section">
+                                        {%  if messages %}
+											{%  for message in messages %}
+												<div {%  if message.tags %}  class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+													{{ message }} go back <a href="#">Dashboard</a>
+												</div>
+												{% endif %}
+											{% endfor %}
+										{% else %}
+										{% endif %}
+									</div>
+								</div>
+								
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</section>
+			<!-- ============================ User Dashboard End ================================== -->
+			
+		
+{%  endblock body %}	
