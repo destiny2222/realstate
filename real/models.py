@@ -124,12 +124,19 @@ class Review(models.Model):
 
 
 class Bookmarklisting(models.Model):
-    users = models.OneToOneField(CustomUser, on_delete=models.SET_NULL, null=True)
-    property = models.OneToOneField(Listing, on_delete=models.SET_NULL, null=True, unique=True)
-    created = models.DateTimeField(auto_now_add=True)
+    property = models.ForeignKey(Listing, on_delete=models.SET_NULL, verbose_name="Property bookmark", null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-       return self.users.username
+        return self.user.username
+   
+    class Meta:
+        unique_together = (
+            ('user', 'property'),
+
+        )    
+
+   
 
 
 class Post(models.Model):

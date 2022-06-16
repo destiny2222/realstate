@@ -25,7 +25,7 @@ def homeview(request):
         'properity_type_choices': properity_type_choices,
         'bedroom_choices': bedroom_choices,
         'bath_rooms_choices': bath_rooms_choices,
-        # 'pro':pro,
+        # 'pro_view':pro_view,
         'values': request.POST
 
         }
@@ -120,6 +120,7 @@ def ProperityView(request):
 
 def DetailsViews(request, slug):
     feature = Featured.objects.order_by('-list_date').all()[:4]
+    admindetails = CustomUser.objects.filter(is_superuser=True)[:1]
     single = Listing.objects.filter(slug=slug)
     if single.exists():
         single = Listing.objects.get(slug=slug)
@@ -139,7 +140,7 @@ def DetailsViews(request, slug):
     else:
         comment_form = ReviewForm()         
     content = {'single':single, 'feature':feature,
-                'comment_form': comment_form}    
+                'comment_form': comment_form, 'superuser':admindetails}    
     return render(request, 'single-property.html', content)
 
 

@@ -8,8 +8,8 @@
 					<div class="row">
 						<div class="col-lg-12 col-md-12">
 							
-							<h2 class="ipt-title">Welcome!</h2>
-							<span class="ipn-subtitle">Welcome To Your Account</span>
+							<h2 class="ipt-title">Bookmark</h2>
+							<span class="ipn-subtitle">Bookmark Property</span>
 							
 						</div>
 					</div>
@@ -51,8 +51,8 @@
 										</tr>
 
 										<!-- Item #1 -->
-										{%  if user.id == i.user.id %}
 										{%  for i in list %}
+										{% if i.user.id == user.id %}
 										<tr>
 											<td class="property-container">
 												<img src="{{ i.property.image.url }}" alt="">
@@ -66,8 +66,8 @@
 												<a href="{%  url 'index:deletebooklist' i.id %}" class="delete"><i class="ti-close"></i> Delete</a>
 											</td>
 										</tr>
-										{%  endfor %}
 										{% endif %}
+										{%  endfor %}
 									</tbody>
 								</table>
 								

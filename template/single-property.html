@@ -179,6 +179,9 @@
 																<img src="{{  user.photo.url }}" alt="">
 															</div>
 															{% else %}
+															<div class="article_comments_thumb">
+																<img src="/static/assets/img/avatar.png" alt="">
+															</div>
 															{% endif %}
 															{%  if not single.reviews.all %}
 															    <p>No Reviews Yet...</p>
@@ -250,6 +253,15 @@
 							
 							<!-- Like And Share -->
 							<div class="like_share_wrap b-0">
+								{%  if messages %}
+									{%  for message in messages %}
+										<div {%  if message.tags %}  class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+											{{ message }}
+										</div>
+										{% endif %}
+									{% endfor %}
+								{% else %}
+								{% endif %}
 								<ul class="like_share_list">
 									<li>
 										<a href="JavaScript:Void(0);" class="btn btn-likes" data-toggle="tooltip" data-original-title="Share">
@@ -268,16 +280,12 @@
 							
 								<!-- Agent Detail -->
 								<div class="sides-widget">
+                                    {%  for i in superuser %}
 									<div class="sides-widget-header">
-										<div class="agent-photo"><img src="{{ single.photo.url }}" alt=""></div>
-										{% if single.listing_user.agent.is_approve %}
-											<span class="material-icons-sharp" style="color:blue;">verified</span>
-											{% else %}
-											<h4></h4>               
-										{% endif %}
+										<div class="agent-photo"><img src="{{ i.photo.url }}" alt=""></div>
 										<div class="sides-widget-details">
-											<h4><a href="#">{{  user.fullname }}</a></h4>
-											<span><i class="lni-phone-handset"></i>{{  single.contact_phone }}</span>
+											<h4><a href="#">{{  i.username }}</a></h4>
+											<span><i class="lni-phone-handset"></i>{{  i.phonenumber }}</span>
 										</div>
 										<div class="clearfix"></div>
 									</div>
@@ -285,17 +293,18 @@
 									<div class="sides-widget-body simple-form">
 										<div class="form-group">
 											<label>Name</label>
-											<input type="text" class="form-control" disabled placeholder="{{  single.contact_name }}">
+											<input type="text" class="form-control" disabled placeholder="{{  i.fullname }}">
 										</div>
 										<div class="form-group">
 											<label>Email</label>
-											<input type="text" class="form-control" disabled placeholder="{{  single.contact_email }}">
+											<input type="text" class="form-control" disabled placeholder="{{  i.email }}">
 										</div>
 										<div class="form-group">
 											<label>Phone No.</label>
-											<input type="text" class="form-control" disabled placeholder="{{  single.contact_phone }}">
+											<input type="text" class="form-control" disabled placeholder="{{  i.phonenumber }}">
 										</div>
 									</div>
+									{%  endfor %}
 								</div>
 								
 								
@@ -313,7 +322,7 @@
 												<img src="{{   i.image.url  }}" class="img-fluid" alt="">
 											</div>
 											<div class="sides_list_property_detail">
-												<h4><a href="single-property-1.html">{{ i.title }}</a></h4>
+												<h4><a href="{%  url 'index:property_detai' i.slug %}">{{ i.title }}</a></h4>
 												<span><i class="ti-location-pin"></i>{{  i.location }}</span>
 												<div class="lists_property_price">
 													<div class="lists_property_types">

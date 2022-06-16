@@ -122,8 +122,8 @@
 .green-skin .single-widgets.widget_search form button,
 .green-skin .single-widgets.widget_tags ul li a:hover, .green-skin .single-widgets.widget_tags ul li a:focus,
 .green-skin .pagination>.active>a, .green-skin .pagination>.active>a:focus, .green-skin .pagination>.active>a:hover, .green-skin .pagination>.active>span, .green-skin .pagination>.active>span:focus, .green-skin .pagination>.active>span:hover, .green-skin .pagination>li>a:focus, .green-skin .pagination>li>a:hover{
-	background-color:#0fca98;
-	background:#0fca98;
+	background-color:#3734f3;
+	background:#3734f3;
 }
  
 .green-skin a.link:hover, .green-skin a.link:focus, .green-skin a:hover, a:focus,
@@ -146,7 +146,7 @@
 .green-skin .single-post-pagination .post-pagination-center-grid a,
 .green-skin .blog-page .blog-details .comment-area .all-comments article .comment-details .comment-meta .comment-left-meta .comment-date,
 .green-skin .cn-info-icon i, .green-skin .client-info h5{
-	color:#0fca98;
+	color:#3734f3;
 }
 
 .green-skin .pagination>.active>a, .green-skin .pagination>.active>a:focus, .green-skin .pagination>.active>a:hover, .green-skin .pagination>.active>span, .green-skin .pagination>.active>span:focus, .green-skin .pagination>.active>span:hover, .green-skin .pagination>li>a:focus, .green-skin .pagination>li>a:hover,
@@ -166,7 +166,7 @@
 .green-skin .nav-tabs .nav-item.show .nav-link, .green-skin .nav-tabs .nav-link.active,
 .green-skin .btn.pop-login,
 .green-skin .single-widgets.widget_tags ul li a:hover, .green-skin .single-widgets.widget_tags ul li a:focus{
-	border-color:#0fca98;
+	border-color:#3734f3;
 }
 
 .green-skin li.login-attri.theme-log a {

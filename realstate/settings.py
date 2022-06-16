@@ -33,7 +33,11 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 # Application definition
 
 INSTALLED_APPS = [
+<<<<<<< HEAD
+    'jazzmin',  
+=======
     'jazzmin',
+>>>>>>> e011f436476e9f508cc5359dfee71b14489143f6
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
