@@ -19,13 +19,14 @@ user = get_user_model()
 def homeview(request):
     property = Listing.objects.order_by('-list_date').all()[:6]
     find_location = Featured.objects.filter(is_active=True)[:6]
+    blog = Post.objects.all()[:3]
     content = {
         'property':property, 
         'find_location':find_location,
         'properity_type_choices': properity_type_choices,
         'bedroom_choices': bedroom_choices,
         'bath_rooms_choices': bath_rooms_choices,
-        # 'pro_view':pro_view,
+        'blog':blog,
         'values': request.POST
 
         }
@@ -186,14 +187,14 @@ def blogview(request):
     page = request.GET.get('page')
     paginator = Paginator(post, 3)
     try:
-        post = paginator.page(page)
+        post_blog = paginator.page(page)
     except PageNotAnInteger:
         # if is not an integer, deliver the first page
-        post = paginator.page(1)
+        post_blog = paginator.page(1)
     except EmptyPage:
         # if the page is out of range deliver the last page
-        post = paginator.page(paginator.num_pages) 
-    content = {'post':post, 'page':page}
+        post_blog = paginator.page(paginator.num_pages) 
+    content = {'post_blog':post_blog, 'page':page}
     return render(request, 'blog.html', content)
 
 def postdetailview(request, slug):

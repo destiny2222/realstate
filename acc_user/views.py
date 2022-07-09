@@ -1,10 +1,9 @@
-from dataclasses import fields
 from django.http import Http404
 from django.shortcuts import get_object_or_404, render,redirect
 from django.contrib.auth import authenticate, login,logout
 from real.models import Bookmarklisting, Listing
 from .forms import  *
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.contrib.auth.views import PasswordResetView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib import messages
@@ -14,12 +13,43 @@ from django.contrib.auth.views import PasswordChangeView
 from django.core.mail import send_mail, BadHeaderError
 from django.views.generic import  UpdateView
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.sites.shortcuts import get_current_site
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode,urlsafe_base64_decode
+from django.utils.encoding import force_bytes,force_str,force_text,DjangoUnicodeDecodeError
+from .utils import generate_token
+from django.core.mail import EmailMessage
+from django.conf import settings
+import threading
 
 # Create your views here.
 
 # User = get_user_model()
 
+class EmailThread(threading.Thread):
 
+    def __init__(self, email):
+        self.email = email
+        threading.Thread.__init__(self)
+
+    def run(self):
+        self.email.send()
+
+def send_activation_email(user, request):
+    current_site = get_current_site(request)
+    email_subject = 'Activate your account'
+    email_body = render_to_string('authentication/activate.html',{
+        'user':user,
+        'domain':current_site,
+        'uid':urlsafe_base64_encode(force_bytes(user.pk)),
+        'token':generate_token.make_token(user)
+    })
+
+    email = EmailMessage(subject=email_subject, body=email_body,
+                         from_email=settings.EMAIL_HOST_USER,
+                         to=[user.email]
+                         )
+    EmailThread(email).start()    
 
 
 def LoginView(request):
@@ -30,12 +60,22 @@ def LoginView(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user = authenticate(request, username=username, password=password)
-            if user != None:
-                login(request, user)
-                request.session['username'] = username
-                return redirect('index:dashborad')
+            if user and not user.is_email_verified:
+                messages.add_message(request, messages.ERROR,
+                    'Email is not verified, please check your email inbox')
+                return render(request, 'account/login.html')
+            if not user:
+                messages.add_message(request, messages.ERROR,
+                                 'Incorrect Email or Password, try again')
+                return render(request, 'account/login.html')
+            login(request, user)
+            messages.add_message(request, messages.SUCCESS,f'Welcome {user.username}')
+            return redirect(reverse('index:dashboard'))
+            # if user != None:
+            #     login(request, user)
+            #     request.session['username'] = username
+                # return redirect('index:dashborad')
         else:
-            messages.success(request, "Incorrect Username or Password")
             form = Loginform(None)
             return redirect('index:login')
     return render(request, 'account/login.html', {'form':form})
@@ -47,12 +87,11 @@ def RegisterView(request):
         form = Signupform(request.POST or None)
         if form.is_valid():
             user = form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, f"New Account Created: {username}")
-            login(request, user)
-            messages.info(request, f"You are now logged in as {username}")
-        
-            return redirect("index:dashborad")
+            user.save()
+            send_activation_email(user, request)
+            messages.add_message(request, messages.SUCCESS,
+                                 'We sent you an email to verify your account')
+            return redirect("index:login")
         else:
             password = form.data['password']
             password2 = form.data['confirm_password']
@@ -198,3 +237,69 @@ def admindashboard(request):
     context = {'count':count, 'total_count':total_count}
     return render(request, 'admin/index.html', context)
   
+
+
+
+#   def signup(request):
+#     if (request.method == 'POST'):
+#         email = request.POST.get('email')
+#         password = request.POST.get('password')
+#         st = request.POST.get('student')
+#         te = request.POST.get('teacher')
+        
+#         user = User.objects.create_user(
+#             email=email,
+#         )
+#         user.set_password(password)
+#         user.save()
+        
+#         usert = None
+#         if st:
+#             usert = user_type(user=user,is_student=True)
+#         elif te:
+#             usert = user_type(user=user,is_teach=True)
+        
+#         usert.save()
+#         #Successfully registered. Redirect to homepage
+#         return redirect('home')
+#     return render(request, 'register.html')
+    
+# def login(request):
+#     if (request.method == 'POST'):
+#         email = request.POST.get('email') #Get email value from form
+#         password = request.POST.get('password') #Get password value from form
+#         user = authenticate(request, email=email, password=password)
+        
+#         if user is not None:
+#             login(request, user)
+#             type_obj = user_type.objects.get(user=user)
+#             if user.is_authenticated and type_obj.is_student:
+#                 return redirect('shome') #Go to student home
+#             elif user.is_authenticated and type_obj.is_teach:
+#                 return redirect('thome') #Go to teacher home
+#         else:
+#             # Invalid email or password. Handle as you wish
+#             return redirect('home')
+
+#     return render(request, 'home.html')
+
+
+def activate_user(request, uidb64, token):
+
+    try:
+        uid = force_text(urlsafe_base64_decode(uidb64))
+
+        user = User.objects.get(pk=uid)
+
+    except Exception as e:
+        user = None
+
+    if user and generate_token.check_token(user, token):
+        user.is_email_verified = True
+        user.save()
+
+        messages.add_message(request, messages.SUCCESS,
+                             'Email verified, you can now login')
+        return redirect(reverse('login'))
+
+    return render(request, 'authentication/activate-failed.html', {"user": user})

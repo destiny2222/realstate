@@ -33,11 +33,7 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 # Application definition
 
 INSTALLED_APPS = [
-<<<<<<< HEAD
-    'jazzmin',  
-=======
     'jazzmin',
->>>>>>> e011f436476e9f508cc5359dfee71b14489143f6
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -303,11 +299,14 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
 
 # email configs
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST = 'mail.privateemail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = str(os.getenv('EMAIL_USER'))
-EMAIL_HOST_PASSWORD = str(os.getenv('EMAIL_PASSWORD'))
+EMAIL_HOST_USER = 'text12@expertsoptionstrader.com'
+EMAIL_HOST_PASSWORD = 'fakepassword2'
+EMAIL_USE_SSl = False
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
 
 #  EMAIL_PASSWORD = windleader@2000
 #  EMAIL_PASSWORD = pwqmmwlrwanmqlub

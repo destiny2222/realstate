@@ -29,6 +29,7 @@ class CustomUser(AbstractUser):
     username = models.CharField(max_length=20,unique=True)
     phonenumber = models.CharField(max_length=15, default='', blank=True, null=True)
     facebook_link = models.CharField(max_length=50)
+    is_email_verified = models.BooleanField(default=False)
     twitter_link = models.CharField(max_length=200)
     google_link = models.CharField(max_length=200)
     linkdin = models.CharField(max_length=200)
