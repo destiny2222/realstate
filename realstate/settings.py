@@ -26,7 +26,7 @@ SECRET_KEY = 'm5$8h%un4mh6p^po_w87mstbj#^o3s@70k3&5-3k%^)6dc0-az'
 DEBUG = True
 
 # ALLOWED_HOSTS = ['*']
-ALLOWED_HOSTS = ['127.0.0.1','dgrealstate.com']
+ALLOWED_HOSTS = ['127.0.0.1','dgrealstate.herokuapp.com']
 
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 # EMAIL_FILE_PATH = BASE_DIR / "sent_emails"
