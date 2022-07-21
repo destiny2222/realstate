@@ -109,14 +109,14 @@ def ProperityView(request):
     page = request.GET.get('page')
     paginator = Paginator(pro_view, 3)
     try:
-        pro_view = paginator.page(page)
+        pro = paginator.page(page)
     except PageNotAnInteger:
         # if is not an integer, deliver the first page
-        pro_view = paginator.page(1)
+        pro = paginator.page(1)
     except EmptyPage:
         # if the page is out of range deliver the last page
-        pro_view = paginator.page(paginator.num_pages) 
-    content = {'pro_view':pro_view, 'page':page,}
+        pro = paginator.page(paginator.num_pages) 
+    content = {'pro':pro,}
     return render(request, 'property-view.html', content)
 
 def DetailsViews(request, slug):
